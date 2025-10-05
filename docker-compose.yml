@@ -10,6 +10,12 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
@@ -20,8 +26,10 @@ services:
     container_name: Rodaki-backend
     restart: always
     depends_on:
-      - mysql
-      - minio
+      mysql:
+        condition: service_healthy  
+      minio:
+        condition: service_started
     environment:
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
@@ -29,9 +37,10 @@ services:
       MINIO_URL: http://minio:9000
       MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
       MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
-      MINIO_BUCKET: bucket-Rodaki
+      MINIO_BUCKET: bucket-rodaki
       JWT_SECRET: ${JWT_SECRET} 
       JWT_EXPIRATION_MS: ${JWT_EXPIRATION_MS}
+      GOOGLE_MAPS_API_KEY: ${GOOGLE_MAPS_API_KEY}
     ports:
       - "8080:8080"
     networks:
@@ -72,8 +81,8 @@ services:
       /bin/sh -c "
       sleep 30 &&
       mc alias set local http://minio:9000 ${MINIO_ACCESS_KEY} ${MINIO_SECRET_KEY} &&
-      mc mb --ignore-existing local/bucket-Rodaki &&
-      mc policy set public local/bucket-Rodaki
+      mc mb --ignore-existing local/bucket-rodaki &&
+      mc policy set public local/bucket-rodaki
       "
     networks:
         - Rodaki

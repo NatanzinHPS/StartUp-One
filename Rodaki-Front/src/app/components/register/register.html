@@ -1,0 +1,67 @@
+<div class="register-container">
+  <h2>Cadastro</h2>
+
+  <form (ngSubmit)="onRegister()">
+    <div class="form-group">
+      <label for="nome">Nome:</label>
+      <input 
+        type="text" 
+        id="nome" 
+        [(ngModel)]="nome" 
+        name="nome" 
+        required
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input 
+        type="email" 
+        id="email" 
+        [(ngModel)]="email" 
+        name="email" 
+        required
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="password">Senha:</label>
+      <input 
+        type="password" 
+        id="password" 
+        [(ngModel)]="senha" 
+        name="password" 
+        required
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="role">Tipo de usuário:</label>
+      <select id="role" [(ngModel)]="role" name="role" required>
+        <option value="ROLE_PASSAGEIRO">Passageiro</option>
+        <option value="ROLE_MOTORISTA">Motorista</option>
+      </select>
+    </div>
+
+    <button type="submit" [disabled]="loading">
+      {{ loading ? 'Cadastrando...' : 'Cadastrar' }}
+    </button>
+
+    @if (errorMessage) {
+      <div class="error">
+        {{ errorMessage }}
+      </div>
+    }
+
+    @if (successMessage) {
+      <div class="success">
+        {{ successMessage }}
+      </div>
+    }
+  </form>
+
+  <p>
+    Já tem conta? 
+    <a [routerLink]="['/login']">Faça login</a>
+  </p>
+</div>

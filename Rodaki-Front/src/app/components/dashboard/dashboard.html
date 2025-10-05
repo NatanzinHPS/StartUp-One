@@ -1,0 +1,31 @@
+<div class="dashboard">
+      <header>
+        <h1>Dashboard</h1>
+        <div class="user-info">
+          <span>Bem-vindo, {{ userEmail }}</span>
+          <button (click)="onLogout()">Sair</button>
+        </div>
+      </header>
+
+      <main>
+        <h2>Teste de Endpoints Protegidos</h2>
+        
+        <div class="test-section">
+          <button (click)="testPassageiros()">Listar Passageiros</button>
+          <button (click)="testMotoristas()">Listar Motoristas</button>
+          <button (click)="testEnderecos()">Listar Endereços</button>
+        </div>
+
+        <div class="results" *ngIf="testResult">
+          <h3>Resultado:</h3>
+          <pre>{{ testResult | json }}</pre>
+        </div>
+
+        <div class="error" *ngIf="errorMessage">
+          <h3>Erro:</h3>
+          <p>{{ errorMessage }}</p>
+        </div>
+      </main>
+    </div>
+
+    
