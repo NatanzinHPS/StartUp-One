@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../services/auth';
+import { MotoristaService } from '../../services/motorista';
+import { PassageiroService } from '../../services/passageiro';
+import { Motorista, Passageiro } from '../../models/user-model';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,73 +14,50 @@ import { AuthService } from '../../services/auth';
 })
 
 export class DashboardComponent implements OnInit {
-  userEmail = '';
-  testResult: any = null;
-  errorMessage = '';
+  motoristas: Motorista[] = [];
+  passageiros: Passageiro[] = [];
+  loadingMotoristas = true;
+  loadingPassageiros = true;
 
   constructor(
     private authService: AuthService,
-    private router: Router,
-    private http: HttpClient
+    private motoristaService: MotoristaService,
+    private passageiroService: PassageiroService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    const user = this.authService.getCurrentUser();
-    if (user) {
-      this.userEmail = user.email;
-    }
+    this.loadMotoristas();
+    this.loadPassageiros();
   }
 
-  testPassageiros(): void {
-    this.testResult = null;
-    this.errorMessage = '';
-    
-    this.http.get('/api/passageiros').subscribe({
+  loadMotoristas(): void {
+    this.motoristaService.listarTodos().subscribe({
       next: (data) => {
-        this.testResult = data;
-        console.log('Passageiros:', data);
+        this.motoristas = data;
+        this.loadingMotoristas = false;
       },
       error: (error) => {
-        this.errorMessage = `Erro ao buscar passageiros: ${error.status} - ${error.message}`;
-        console.error('Erro:', error);
+        console.error('Erro ao carregar motoristas:', error);
+        this.loadingMotoristas = false;
       }
     });
   }
 
-  testMotoristas(): void {
-    this.testResult = null;
-    this.errorMessage = '';
-    
-    this.http.get('/api/motoristas').subscribe({
+  loadPassageiros(): void {
+    this.passageiroService.listarTodos().subscribe({
       next: (data) => {
-        this.testResult = data;
-        console.log('Motoristas:', data);
+        this.passageiros = data;
+        this.loadingPassageiros = false;
       },
       error: (error) => {
-        this.errorMessage = `Erro ao buscar motoristas: ${error.status} - ${error.message}`;
-        console.error('Erro:', error);
+        console.error('Erro ao carregar passageiros:', error);
+        this.loadingPassageiros = false;
       }
     });
   }
 
-  testEnderecos(): void {
-    this.testResult = null;
-    this.errorMessage = '';
-    
-    // Ajuste o ID conforme necessário
-    this.http.get('/api/enderecos/passageiro/1').subscribe({
-      next: (data) => {
-        this.testResult = data;
-        console.log('Endereços:', data);
-      },
-      error: (error) => {
-        this.errorMessage = `Erro ao buscar endereços: ${error.status} - ${error.message}`;
-        console.error('Erro:', error);
-      }
-    });
-  }
-
-  onLogout(): void {
+  logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);
   }

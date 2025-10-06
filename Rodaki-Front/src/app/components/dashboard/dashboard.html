@@ -1,31 +1,50 @@
 <div class="dashboard">
-      <header>
-        <h1>Dashboard</h1>
-        <div class="user-info">
-          <span>Bem-vindo, {{ userEmail }}</span>
-          <button (click)="onLogout()">Sair</button>
-        </div>
-      </header>
+  <nav class="navbar">
+    <h1>Rodaki Dashboard</h1>
+    <button (click)="logout()" class="logout-btn">Sair</button>
+  </nav>
 
-      <main>
-        <h2>Teste de Endpoints Protegidos</h2>
-        
-        <div class="test-section">
-          <button (click)="testPassageiros()">Listar Passageiros</button>
-          <button (click)="testMotoristas()">Listar Motoristas</button>
-          <button (click)="testEnderecos()">Listar Endereços</button>
-        </div>
+  <div class="container">
+    <div class="section">
+      <h2>Motoristas</h2>
 
-        <div class="results" *ngIf="testResult">
-          <h3>Resultado:</h3>
-          <pre>{{ testResult | json }}</pre>
-        </div>
+      @if (loadingMotoristas) {
+        <div class="loading">Carregando...</div>
+      }
 
-        <div class="error" *ngIf="errorMessage">
-          <h3>Erro:</h3>
-          <p>{{ errorMessage }}</p>
+      @if (!loadingMotoristas && motoristas.length === 0) {
+        <div class="empty">Nenhum motorista cadastrado</div>
+      }
+
+      <div class="cards">
+        <div *ngFor="let motorista of motoristas" class="card">
+          <h3>{{ motorista.user.nome }}</h3>
+          <p><strong>Email:</strong> {{ motorista.user.email }}</p>
+          <p><strong>Veículo:</strong> {{ motorista.veiculo }}</p>
+          <p><strong>Placa:</strong> {{ motorista.placa }}</p>
+          <p><strong>Capacidade:</strong> {{ motorista.capacidade }} pessoas</p>
         </div>
-      </main>
+      </div>
     </div>
 
-    
+    <div class="section">
+      <h2>Passageiros</h2>
+
+      @if (loadingPassageiros) {
+        <div class="loading">Carregando...</div>
+      }
+
+      @if (!loadingPassageiros && passageiros.length === 0) {
+        <div class="empty">Nenhum passageiro cadastrado</div>
+      }
+
+      <div class="cards">
+        <div *ngFor="let passageiro of passageiros" class="card">
+          <h3>{{ passageiro.user.nome }}</h3>
+          <p><strong>Email:</strong> {{ passageiro.user.email }}</p>
+          <p><strong>Endereço:</strong> {{ passageiro.endereco }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

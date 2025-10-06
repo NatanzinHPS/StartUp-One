@@ -1,76 +1,49 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { Observable, BehaviorSubject, tap } from 'rxjs';
+import { AuthResponse, LoginRequest, RegisterRequest } from '../models/user-model';
 
-export interface LoginRequest {
-  email: string;
-  senha: string;
-}
-
-export interface RegisterRequest {
-  nome: string;
-  email: string;
-  senha: string;
-  role: 'ROLE_PASSAGEIRO' | 'ROLE_MOTORISTA';
-}
-
-export interface AuthResponse {
-  token: string;
-  email: string;
-  role: string;
-}
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
   private apiUrl = '/api/auth';
   private tokenKey = 'auth_token';
-  private userKey = 'user_data';
-  
-  private currentUserSubject = new BehaviorSubject<AuthResponse | null>(this.getUserFromStorage());
-  public currentUser$ = this.currentUserSubject.asObservable();
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
+
+  isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
   register(request: RegisterRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/register`, request).pipe(
-      tap(response => this.handleAuthResponse(response))
+      tap(response => this.setToken(response.token))
     );
   }
 
   login(request: LoginRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/login`, request).pipe(
-      tap(response => this.handleAuthResponse(response))
+      tap(response => this.setToken(response.token))
     );
   }
 
   logout(): void {
     localStorage.removeItem(this.tokenKey);
-    localStorage.removeItem(this.userKey);
-    this.currentUserSubject.next(null);
+    this.isAuthenticatedSubject.next(false);
   }
 
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
   }
 
-  isAuthenticated(): boolean {
+  private setToken(token: string): void {
+    localStorage.setItem(this.tokenKey, token);
+    this.isAuthenticatedSubject.next(true);
+  }
+
+  private hasToken(): boolean {
     return !!this.getToken();
   }
 
-  getCurrentUser(): AuthResponse | null {
-    return this.currentUserSubject.value;
-  }
-
-  private handleAuthResponse(response: AuthResponse): void {
-    localStorage.setItem(this.tokenKey, response.token);
-    localStorage.setItem(this.userKey, JSON.stringify(response));
-    this.currentUserSubject.next(response);
-  }
-
-  private getUserFromStorage(): AuthResponse | null {
-    const userData = localStorage.getItem(this.userKey);
-    return userData ? JSON.parse(userData) : null;
+  isAuthenticated(): boolean {
+    return this.hasToken();
   }
 }

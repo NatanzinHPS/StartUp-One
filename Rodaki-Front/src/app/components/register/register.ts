@@ -1,56 +1,45 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth';
+import { RegisterRequest, Role } from '../../models/user-model';
+
 
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './register.html',
   styleUrl: './register.scss'
 })
 export class RegisterComponent {
-  nome = '';
-  email = '';
-  senha = '';
-  role: 'ROLE_PASSAGEIRO' | 'ROLE_MOTORISTA' = 'ROLE_PASSAGEIRO';
+  Role = Role;
+  
+  userData: RegisterRequest = {
+    nome: '',
+    email: '',
+    senha: '',
+    role: '' as Role
+  };
+  
   loading = false;
   errorMessage = '';
-  successMessage = '';
 
   constructor(
     private authService: AuthService,
     private router: Router
   ) {}
 
-  onRegister(): void {
-    if (!this.nome || !this.email || !this.senha) {
-      this.errorMessage = 'Por favor, preencha todos os campos';
-      return;
-    }
-
+  onSubmit(): void {
     this.loading = true;
     this.errorMessage = '';
-    this.successMessage = '';
 
-    this.authService.register({
-      nome: this.nome,
-      email: this.email,
-      senha: this.senha,
-      role: this.role
-    }).subscribe({
-      next: (response) => {
-        console.log('Registro realizado com sucesso!', response);
-        this.successMessage = 'Cadastro realizado com sucesso! Redirecionando...';
-        
-        setTimeout(() => {
-          this.router.navigate(['/dashboard']);
-        }, 2000);
+    this.authService.register(this.userData).subscribe({
+      next: () => {
+        this.router.navigate(['/dashboard']);
       },
       error: (error) => {
-        console.error('Erro ao fazer cadastro:', error);
-        this.errorMessage = error.error?.message || 'Erro ao realizar cadastro. Tente novamente.';
+        this.errorMessage = error.error?.error || 'Erro ao registrar';
         this.loading = false;
       },
       complete: () => {

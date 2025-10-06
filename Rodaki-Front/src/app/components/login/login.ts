@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth';
+import { LoginRequest } from '../../models/user-model';
 
 @Component({
   selector: 'app-login',
@@ -12,8 +13,11 @@ import { AuthService } from '../../services/auth';
 })
 
 export class LoginComponent {
-  email = '';
-  senha = '';
+  credentials: LoginRequest = {
+    email: '',
+    senha: ''
+  };
+  
   loading = false;
   errorMessage = '';
 
@@ -22,29 +26,21 @@ export class LoginComponent {
     private router: Router
   ) {}
 
-  onLogin(): void {
-    if (!this.email || !this.senha) {
-      this.errorMessage = 'Por favor, preencha todos os campos';
-      return;
-    }
-
+  onSubmit(): void {
     this.loading = true;
     this.errorMessage = '';
 
-    this.authService.login({ email: this.email, senha: this.senha })
-      .subscribe({
-        next: (response) => {
-          console.log('Login realizado com sucesso!', response);
-          this.router.navigate(['/dashboard']);
-        },
-        error: (error) => {
-          console.error('Erro ao fazer login:', error);
-          this.errorMessage = 'Credenciais inválidas. Tente novamente.';
-          this.loading = false;
-        },
-        complete: () => {
-          this.loading = false;
-        }
-      });
+    this.authService.login(this.credentials).subscribe({
+      next: () => {
+        this.router.navigate(['/dashboard']);
+      },
+      error: (error) => {
+        this.errorMessage = error.error?.error || 'Erro ao fazer login';
+        this.loading = false;
+      },
+      complete: () => {
+        this.loading = false;
+      }
+    });
   }
 }

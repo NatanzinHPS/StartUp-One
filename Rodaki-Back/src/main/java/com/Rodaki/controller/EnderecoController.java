@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/enderecos")
-@CrossOrigin(origins = "*")
 public class EnderecoController {
 
     private final EnderecoService enderecoService;

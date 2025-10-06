@@ -1,5 +1,7 @@
 package com.Rodaki.service;
 
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,19 +17,44 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+    private final AuthenticationManager authenticationManager;
 
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
+    public AuthService(
+            UserRepository userRepository, 
+            PasswordEncoder passwordEncoder, 
+            JwtUtil jwtUtil,
+            AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
+        this.authenticationManager = authenticationManager;
     }
 
     public AuthResponse register(RegisterRequest request) {
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new RuntimeException("Email já cadastrado");
+        }
+
+        // Validar campos obrigatórios
+        if (request.getNome() == null || request.getNome().trim().isEmpty()) {
+            throw new RuntimeException("Nome é obrigatório");
+        }
+        if (request.getEmail() == null || request.getEmail().trim().isEmpty()) {
+            throw new RuntimeException("Email é obrigatório");
+        }
+        if (request.getSenha() == null || request.getSenha().length() < 6) {
+            throw new RuntimeException("Senha deve ter no mínimo 6 caracteres");
+        }
+        if (request.getRole() == null) {
+            throw new RuntimeException("Role é obrigatória");
+        }
+
         User user = new User();
-        user.setNome(request.getNome());
-        user.setEmail(request.getEmail());
+        user.setNome(request.getNome().trim());
+        user.setEmail(request.getEmail().trim().toLowerCase());
         user.setSenha(passwordEncoder.encode(request.getSenha()));
         user.setRole(request.getRole());
+        
         userRepository.save(user);
 
         String token = jwtUtil.generateToken(user.getEmail(), user.getRole().name());
@@ -35,11 +62,23 @@ public class AuthService {
     }
 
     public AuthResponse login(LoginRequest request) {
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        if (!passwordEncoder.matches(request.getSenha(), user.getSenha())) {
-            throw new RuntimeException("Senha inválida");
+        if (request.getEmail() == null || request.getEmail().trim().isEmpty()) {
+            throw new RuntimeException("Email é obrigatório");
         }
+        if (request.getSenha() == null || request.getSenha().isEmpty()) {
+            throw new RuntimeException("Senha é obrigatória");
+        }
+
+        User user = userRepository.findByEmail(request.getEmail().trim().toLowerCase())
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(
+                request.getEmail().trim().toLowerCase(),
+                request.getSenha()
+            )
+        );
+
         String token = jwtUtil.generateToken(user.getEmail(), user.getRole().name());
         return new AuthResponse(token);
     }

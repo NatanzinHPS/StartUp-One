@@ -10,7 +10,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/cep")
-@CrossOrigin(origins = "*")
 public class CepController {
 
     private final ViaCepService viaCepService;
