@@ -1,0 +1,145 @@
+$primary-start: #667eea;
+$primary-end: #764ba2;
+$error-color: #e74c3c;
+$text-dark: #333;
+$text-light: #555;
+$radius: 8px;
+
+@mixin gradient-bg($start, $end) {
+  background: linear-gradient(135deg, $start 0%, $end 100%);
+}
+
+@mixin input-style {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #ddd;
+  border-radius: $radius;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  @include gradient-bg($primary-start, $primary-end);
+  animation: fadeIn 0.6s ease;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+.login-card {
+  background: #fff;
+  padding: 2.5rem 2rem;
+  border-radius: 15px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 420px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+  }
+}
+
+h1 {
+  text-align: center;
+  color: $text-dark;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: $text-light;
+    font-weight: 600;
+  }
+
+  input {
+    @include input-style;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-start;
+      box-shadow: 0 0 6px rgba(102, 126, 234, 0.4);
+    }
+
+    &.ng-invalid.ng-touched {
+      border-color: $error-color;
+    }
+  }
+
+  .error {
+    color: $error-color;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+}
+
+.error-message {
+  background: #fee;
+  color: darken($error-color, 10%);
+  padding: 0.75rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+button {
+  width: 100%;
+  padding: 0.85rem;
+  @include gradient-bg($primary-start, $primary-end);
+  color: #fff;
+  border: none;
+  border-radius: $radius;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(118, 75, 162, 0.3);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 1.8rem;
+  color: #666;
+  font-size: 0.95rem;
+
+  a {
+    color: $primary-start;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+
+    &:hover {
+      text-decoration: underline;
+      color: lighten($primary-start, 5%);
+    }
+  }
+}

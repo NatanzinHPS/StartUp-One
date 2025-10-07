@@ -7,7 +7,7 @@ COPY . .
 RUN ng build --configuration production
 
 FROM nginx:alpine
-COPY --from=build /app/dist/VanGo-Front/browser /usr/share/nginx/html
+COPY --from=build /app/dist/Rodaki-Front/browser /usr/share/nginx/html
 RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80

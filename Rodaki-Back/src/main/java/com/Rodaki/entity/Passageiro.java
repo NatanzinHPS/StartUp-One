@@ -1,12 +1,14 @@
 package com.Rodaki.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "passageiros")
 public class Passageiro {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
@@ -17,17 +19,28 @@ public class Passageiro {
 
     private Double latitude;
     private Double longitude;
+    
+    private LocalDateTime createdAt;
 
-    public Passageiro() {}
+    public Passageiro() {
+        this.createdAt = LocalDateTime.now();
+    }
 
     public Passageiro(User user, String endereco, Double latitude, Double longitude) {
         this.user = user;
         this.endereco = endereco;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.createdAt = LocalDateTime.now();
     }
 
-    // getters / setters
+    @PrePersist
+    protected void onCreate() {
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
+    }
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -42,4 +55,7 @@ public class Passageiro {
 
     public Double getLongitude() { return longitude; }
     public void setLongitude(Double longitude) { this.longitude = longitude; }
+    
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 }

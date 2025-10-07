@@ -1,0 +1,1 @@
+ALTER TABLE motoristas DROP COLUMN capacidade;

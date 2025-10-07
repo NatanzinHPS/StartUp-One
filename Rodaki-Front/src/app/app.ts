@@ -8,7 +8,6 @@ import { TestService } from './services/test';
   standalone: true,
   imports: [CommonModule, RouterOutlet],
   template: `
-    <h1>{{ message || "Carregando mensagem do backend..." }}</h1>
     <router-outlet></router-outlet>
   `,
   styleUrls: ['./app.scss']

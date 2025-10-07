@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "VanGo-Front": {
+    "Rodaki-Front": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -61,10 +61,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "VanGo-Front:build:production"
+              "buildTarget": "Rodaki-Front:build:production"
             },
             "development": {
-              "buildTarget": "VanGo-Front:build:development"
+              "buildTarget": "Rodaki-Front:build:development"
             }
           },
           "defaultConfiguration": "development"
