@@ -14,23 +14,14 @@ public class Passageiro {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    private String endereco;
-
-    private Double latitude;
-    private Double longitude;
-    
     private LocalDateTime createdAt;
 
     public Passageiro() {
         this.createdAt = LocalDateTime.now();
     }
 
-    public Passageiro(User user, String endereco, Double latitude, Double longitude) {
+    public Passageiro(User user, Double latitude, Double longitude) {
         this.user = user;
-        this.endereco = endereco;
-        this.latitude = latitude;
-        this.longitude = longitude;
         this.createdAt = LocalDateTime.now();
     }
 
@@ -46,15 +37,6 @@ public class Passageiro {
 
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
-
-    public String getEndereco() { return endereco; }
-    public void setEndereco(String endereco) { this.endereco = endereco; }
-
-    public Double getLatitude() { return latitude; }
-    public void setLatitude(Double latitude) { this.latitude = latitude; }
-
-    public Double getLongitude() { return longitude; }
-    public void setLongitude(Double longitude) { this.longitude = longitude; }
     
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
