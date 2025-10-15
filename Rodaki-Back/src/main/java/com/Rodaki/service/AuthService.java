@@ -35,14 +35,13 @@ public class AuthService {
             throw new RuntimeException("Email já cadastrado");
         }
 
-        // Validar campos obrigatórios
-        if (request.getNome() == null || request.getNome().trim().isEmpty()) {
+        if (request.getName() == null || request.getName().trim().isEmpty()) {
             throw new RuntimeException("Nome é obrigatório");
         }
         if (request.getEmail() == null || request.getEmail().trim().isEmpty()) {
             throw new RuntimeException("Email é obrigatório");
         }
-        if (request.getSenha() == null || request.getSenha().length() < 6) {
+        if (request.getPassword() == null || request.getPassword().length() < 6) {
             throw new RuntimeException("Senha deve ter no mínimo 6 caracteres");
         }
         if (request.getRole() == null) {
@@ -50,9 +49,10 @@ public class AuthService {
         }
 
         User user = new User();
-        user.setNome(request.getNome().trim());
+        user.setName(request.getName().trim());
         user.setEmail(request.getEmail().trim().toLowerCase());
-        user.setSenha(passwordEncoder.encode(request.getSenha()));
+        user.setPhone(request.getPhone());
+        user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
         user.setRole(request.getRole());
         
         userRepository.save(user);
@@ -65,7 +65,7 @@ public class AuthService {
         if (request.getEmail() == null || request.getEmail().trim().isEmpty()) {
             throw new RuntimeException("Email é obrigatório");
         }
-        if (request.getSenha() == null || request.getSenha().isEmpty()) {
+        if (request.getPassword() == null || request.getPassword().isEmpty()) {
             throw new RuntimeException("Senha é obrigatória");
         }
 
@@ -75,7 +75,7 @@ public class AuthService {
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
                 request.getEmail().trim().toLowerCase(),
-                request.getSenha()
+                request.getPassword()
             )
         );
 
