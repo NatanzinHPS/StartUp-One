@@ -1,7 +1,4 @@
 import { Routes } from '@angular/router';
-import { DashboardComponent } from './components/dashboard/dashboard';
-import { LoginComponent } from './components/login/login';
-import { RegisterComponent } from './components/register/register';
 import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
@@ -22,6 +19,11 @@ export const routes: Routes = [
     path: 'dashboard',
     loadComponent: () => import('./components/dashboard/dashboard').then(m => m.DashboardComponent),
     canActivate: [authGuard]
+  },
+  {
+    path: 'weekly-schedule',
+    loadComponent: () => import('./components/weekly-schedule/weekly-schedule-component').then(m => m.WeeklyScheduleComponent),
+    // canActivate: [authGuard]
   },
   {
     path: '**',

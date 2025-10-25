@@ -12,15 +12,15 @@ export interface User {
 }
 
 export interface RegisterRequest {
-  nome: string;
+  name: string;
   email: string;
-  senha: string;
+  password: string;
   role: Role;
 }
 
 export interface LoginRequest {
   email: string;
-  senha: string;
+  password: string;
 }
 
 export interface AuthResponse {

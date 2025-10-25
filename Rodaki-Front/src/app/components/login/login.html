@@ -20,17 +20,17 @@
       </div>
 
       <div class="form-group">
-        <label for="senha">Senha</label>
+        <label for="password">Senha</label>
         <input
           type="password"
-          id="senha"
-          name="senha"
-          [(ngModel)]="credentials.senha"
+          id="password"
+          name="password"
+          [(ngModel)]="credentials.password"
           required
           minlength="6"
-          #senha="ngModel"
+          #password="ngModel"
         />
-        @if (senha.invalid && senha.touched) {
+        @if (password.invalid && password.touched) {
           <div class="error">Senha deve ter no mínimo 6 caracteres</div>
         }
       </div>

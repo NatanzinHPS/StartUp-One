@@ -16,9 +16,9 @@ export class RegisterComponent {
   Role = Role;
   
   userData: RegisterRequest = {
-    nome: '',
+    name: '',
     email: '',
-    senha: '',
+    password: '',
     role: '' as Role
   };
   

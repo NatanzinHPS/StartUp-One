@@ -15,7 +15,7 @@ import { LoginRequest } from '../../models/user-model';
 export class LoginComponent {
   credentials: LoginRequest = {
     email: '',
-    senha: ''
+    password: ''
   };
   
   loading = false;
