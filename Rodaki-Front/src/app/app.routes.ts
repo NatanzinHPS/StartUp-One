@@ -23,7 +23,7 @@ export const routes: Routes = [
   {
     path: 'weekly-schedule',
     loadComponent: () => import('./components/weekly-schedule/weekly-schedule-component').then(m => m.WeeklyScheduleComponent),
-    // canActivate: [authGuard]
+    canActivate: [authGuard]
   },
   {
     path: '**',

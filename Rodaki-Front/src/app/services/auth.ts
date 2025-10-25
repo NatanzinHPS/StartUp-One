@@ -5,7 +5,7 @@ import { AuthResponse, LoginRequest, RegisterRequest } from '../models/user-mode
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private apiUrl = '/api/auth';
+  private apiUrl = 'http://localhost:8080/api/auth';
   private tokenKey = 'auth_token';
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
 

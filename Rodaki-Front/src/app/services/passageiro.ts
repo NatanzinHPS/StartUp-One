@@ -5,7 +5,7 @@ import { Passageiro } from '../models/user-model';
 
 @Injectable({ providedIn: 'root' })
 export class PassageiroService {
-  private apiUrl = '/api/passageiros';
+  private apiUrl = 'http://localhost:8080/api/passageiros';
 
   constructor(private http: HttpClient) {}
 
