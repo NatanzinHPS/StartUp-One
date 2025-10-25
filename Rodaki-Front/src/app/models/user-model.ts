@@ -6,8 +6,9 @@ export enum Role {
 
 export interface User {
   id: number;
-  nome: string;
+  name: string;
   email: string;
+  phone?: string;
   role: Role;
 }
 
@@ -30,17 +31,11 @@ export interface AuthResponse {
 export interface Motorista {
   id?: number;
   user: User;
-  veiculo: string;
-  placa: string;
-  capacidade: number;
-  latitude: number;
-  longitude: number;
+  passengerIds: number[];
 }
 
 export interface Passageiro {
   id?: number;
   user: User;
-  endereco: string;
-  latitude: number;
-  longitude: number;
+  addresses: string[];
 }
