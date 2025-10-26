@@ -31,6 +31,11 @@ export const routes: Routes = [
     // canActivate: [authGuard]
   },
   {
+    path: 'daily-checkin',
+    loadComponent: () => import('./components/daily-checkin-list/daily-checkin-list').then(m => m.DailyCheckinList)
+    // canActivate: [authGuard]
+  },
+  {
     path: '**',
     redirectTo: '/login'
   }
