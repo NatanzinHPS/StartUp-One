@@ -10,7 +10,7 @@ describe('DailyCheckinList', () => {
     await TestBed.configureTestingModule({
       imports: [DailyCheckinList]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(DailyCheckinList);
     component = fixture.componentInstance;

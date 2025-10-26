@@ -10,7 +10,7 @@ describe('WeeklyScheduleComponent', () => {
     await TestBed.configureTestingModule({
       imports: [WeeklyScheduleComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(WeeklyScheduleComponent);
     component = fixture.componentInstance;

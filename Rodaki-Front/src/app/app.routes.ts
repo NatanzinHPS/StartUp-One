@@ -21,6 +21,11 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
   {
+    path: 'passenger-home',
+    loadComponent: () => import('./components/passenger-home/passenger-home').then(m => m.PassengerHome)
+    // canActivate: [authGuard]
+  },
+  {
     path: 'weekly-schedule',
     loadComponent: () => import('./components/weekly-schedule/weekly-schedule-component').then(m => m.WeeklyScheduleComponent),
     // canActivate: [authGuard]

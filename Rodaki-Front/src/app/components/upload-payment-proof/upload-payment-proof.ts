@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PaymentProof, PaymentProofService } from '../../services/payment-proof';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-upload-payment-proof',
@@ -33,7 +34,9 @@ export class UploadPaymentProof {
   errorMessage = '';
   uploading = false;
 
-  constructor(private service: PaymentProofService) { }
+  constructor(private service: PaymentProofService,
+    private router: Router
+  ) { }
 
   onFileSelected(file?: File | null) {
     this.errorMessage = '';
@@ -99,7 +102,7 @@ export class UploadPaymentProof {
       this.model.fileDataUrl = undefined;
       this.model.fileName = undefined;
       this.model.fileType = '';
-      
+
       if (this.fileInput) {
         this.fileInput.nativeElement.value = '';
       }
@@ -108,6 +111,12 @@ export class UploadPaymentProof {
       this.errorMessage = 'Falha ao enviar comprovante.';
     } finally {
       this.uploading = false;
+      this.goToPassengerHome();
     }
   }
+
+  goToPassengerHome() {
+    this.router.navigate(['/passenger-home']);
+  }
+
 }

@@ -5,7 +5,8 @@
     <i class="bi bi-info-circle ms-2 text-secondary" title="Defina os dias e horários em que usará o transporte"></i>
   </div>
 
-  <div class="alert alert-warning py-2 small text-center d-flex align-items-center justify-content-center gap-2" role="alert">
+  <div class="alert alert-warning py-2 small text-center d-flex align-items-center justify-content-center gap-2"
+    role="alert">
     <i class="bi bi-clock-history text-warning fs-5"></i>
     <span>Limite para alterações diárias até as <strong>16:15</strong></span>
   </div>
@@ -16,7 +17,8 @@
         <i class="bi bi-calendar3 me-2"></i> Dias da Semana
       </h6>
 
-      <div *ngFor="let day of weekDays" class="day-row mb-3 p-2 rounded" [style.background-color]="getDayColor(day.dayOfWeek)">
+      <div *ngFor="let day of weekDays" class="day-row mb-3 p-2 rounded"
+        [style.background-color]="getDayColor(day.dayOfWeek)">
         <div class="d-flex align-items-center justify-content-between">
           <span class="fw-medium">{{ day.name }}</span>
           <div class="form-check form-switch">
@@ -27,18 +29,24 @@
 
         <div *ngIf="day.isActive" class="selector-container text-center mt-2 animate-highlight">
           <div class="btn-group w-100" role="group">
-            <input type="radio" class="btn-check" name="segment-{{day.dayOfWeek}}" id="ida-{{day.dayOfWeek}}" value="MORNING" [(ngModel)]="day.schedule" />
-            <label class="btn btn-outline-success w-100 m-1 d-flex align-items-center justify-content-center" for="ida-{{day.dayOfWeek}}">
+            <input type="radio" class="btn-check" name="segment-{{day.dayOfWeek}}" id="ida-{{day.dayOfWeek}}"
+              value="MORNING" [(ngModel)]="day.schedule" />
+            <label class="btn btn-outline-success w-100 m-1 d-flex align-items-center justify-content-center"
+              for="ida-{{day.dayOfWeek}}">
               <i class="bi bi-sunrise me-1"></i> Ida
             </label>
 
-            <input type="radio" class="btn-check" name="segment-{{day.dayOfWeek}}" id="volta-{{day.dayOfWeek}}" value="AFTERNOON" [(ngModel)]="day.schedule" />
-            <label class="btn btn-outline-success w-100 m-1 d-flex align-items-center justify-content-center" for="volta-{{day.dayOfWeek}}">
+            <input type="radio" class="btn-check" name="segment-{{day.dayOfWeek}}" id="volta-{{day.dayOfWeek}}"
+              value="AFTERNOON" [(ngModel)]="day.schedule" />
+            <label class="btn btn-outline-success w-100 m-1 d-flex align-items-center justify-content-center"
+              for="volta-{{day.dayOfWeek}}">
               <i class="bi bi-sunset me-1"></i> Volta
             </label>
 
-            <input type="radio" class="btn-check" name="segment-{{day.dayOfWeek}}" id="ambas-{{day.dayOfWeek}}" value="BOTH" [(ngModel)]="day.schedule" />
-            <label class="btn btn-outline-success w-100 m-1 d-flex align-items-center justify-content-center" for="ambas-{{day.dayOfWeek}}">
+            <input type="radio" class="btn-check" name="segment-{{day.dayOfWeek}}" id="ambas-{{day.dayOfWeek}}"
+              value="BOTH" [(ngModel)]="day.schedule" />
+            <label class="btn btn-outline-success w-100 m-1 d-flex align-items-center justify-content-center"
+              for="ambas-{{day.dayOfWeek}}">
               <i class="bi bi-arrow-repeat me-1"></i> Ambas
             </label>
           </div>

@@ -5,38 +5,23 @@
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
       <div class="form-group">
         <label for="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          [(ngModel)]="credentials.email"
-          required
-          email
-          #email="ngModel"
-        />
+        <input type="email" id="email" name="email" [(ngModel)]="credentials.email" required email #email="ngModel" />
         @if (email.invalid && email.touched) {
-          <div class="error">Email inválido</div>
+        <div class="error">Email inválido</div>
         }
       </div>
 
       <div class="form-group">
         <label for="password">Senha</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          [(ngModel)]="credentials.password"
-          required
-          minlength="6"
-          #password="ngModel"
-        />
+        <input type="password" id="password" name="password" [(ngModel)]="credentials.password" required minlength="6"
+          #password="ngModel" />
         @if (password.invalid && password.touched) {
-          <div class="error">Senha deve ter no mínimo 6 caracteres</div>
+        <div class="error">Senha deve ter no mínimo 6 caracteres</div>
         }
       </div>
 
       @if (errorMessage) {
-        <div class="error-message">{{ errorMessage }}</div>
+      <div class="error-message">{{ errorMessage }}</div>
       }
 
       <button type="submit" [disabled]="loginForm.invalid || loading">

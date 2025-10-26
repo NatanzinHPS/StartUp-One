@@ -1,0 +1,77 @@
+.container {
+  max-width: 480px;
+  background-color: #F8F9FA;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.avatar { width: 40px; height: 40px; border-radius: 999px; object-fit: cover; }
+.avatar-lg { width: 64px; height: 64px; object-fit: cover; }
+
+.card { border-radius: 0.75rem; transition: box-shadow 0.2s ease; }
+.card:hover { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06); }
+
+.status-badge { padding: 0.5rem 0.75rem; border-radius: 999px; font-weight: 600; }
+.badge-ida { background: #e7f4ff; color: #0056B3; }
+.badge-volta { background: #eef9ff; color: #0d6efd; }
+.badge-ambas { background: #e6f9ee; color: #198754; }
+.badge-absent { background: #fdecea; color: #dc3545; }
+
+.grid-actions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.action-card {
+  background: #f1f3f5;
+  border: none;
+  padding: 0.9rem;
+  border-radius: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.action-card--large {
+  grid-column: span 2;
+}
+
+.action-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.action-card.active {
+  background: #28A745;
+  color: white;
+}
+
+.action-card.absent {
+  background: #fdecea;
+  color: #dc3545;
+}
+
+.list-group-item {
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.list-group-item:hover {
+  background: #f1f3f5;
+  transform: translateX(3px);
+}
+
+@media (min-width: 768px) {
+  .container { max-width: 700px; }
+  .grid-actions { grid-template-columns: repeat(4, 1fr); }
+}

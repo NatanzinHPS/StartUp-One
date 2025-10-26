@@ -18,7 +18,8 @@
 
   <div class="card mb-3 shadow-sm">
     <div class="card-body">
-      <label class="form-label small d-flex align-items-center"><i class="bi bi-calendar3 me-2"></i> Mês de Referência</label>
+      <label class="form-label small d-flex align-items-center"><i class="bi bi-calendar3 me-2"></i> Mês de
+        Referência</label>
       <select class="form-select" [(ngModel)]="model.referenceMonth">
         <option *ngFor="let m of months" [value]="m.value">{{m.label}}</option>
       </select>
@@ -27,17 +28,19 @@
 
   <div class="card mb-3 shadow-sm">
     <div class="card-body">
-      <label class="form-label small d-flex align-items-center"><i class="bi bi-currency-dollar me-2"></i> Valor Pago</label>
+      <label class="form-label small d-flex align-items-center"><i class="bi bi-currency-dollar me-2"></i> Valor
+        Pago</label>
       <input type="number" class="form-control" [(ngModel)]="model.amount" min="0" step="0.01" placeholder="R$ 0,00" />
     </div>
   </div>
 
   <div class="card mb-3 shadow-sm">
     <div class="card-body">
-      <label class="form-label small d-flex align-items-center"><i class="bi bi-paperclip me-2"></i> Comprovante de Pagamento</label>
+      <label class="form-label small d-flex align-items-center"><i class="bi bi-paperclip me-2"></i> Comprovante de
+        Pagamento</label>
 
-      <div class="upload-dropzone mt-2 p-3 text-center rounded" [class.dragover]="dragOver"
-           (drop)="onDrop($event)" (dragover)="onDragOver($event)" (dragleave)="onDragLeave()">
+      <div class="upload-dropzone mt-2 p-3 text-center rounded" [class.dragover]="dragOver" (drop)="onDrop($event)"
+        (dragover)="onDragOver($event)" (dragleave)="onDragLeave()">
 
         <div *ngIf="!fileBuffer" class="placeholder">
           <i class="bi bi-cloud-upload fs-1 text-primary"></i>
@@ -67,14 +70,16 @@
           </div>
         </div>
 
-        <input #fileInput type="file" accept="image/*,application/pdf" class="d-none" (change)="onFileSelected($event.target.files?.[0] ?? null)" />
+        <input #fileInput type="file" accept="image/*,application/pdf" class="d-none"
+          (change)="onFileSelected($event.target.files?.[0] ?? null)" />
       </div>
 
       <div *ngIf="errorMessage" class="text-danger small mt-2">{{ errorMessage }}</div>
     </div>
   </div>
 
-  <button [disabled]="!isFormValid() || uploading" (click)="send()" class="btn w-100 fw-bold" [ngClass]="{'btn-primary': isFormValid() && !uploading, 'btn-secondary': !isFormValid()}">
+  <button [disabled]="!isFormValid() || uploading" (click)="send()" class="btn w-100 fw-bold"
+    [ngClass]="{'btn-primary': isFormValid() && !uploading, 'btn-secondary': !isFormValid()}">
     <i class="bi bi-send me-2"></i>
     {{ uploading ? 'Enviando...' : 'Enviar Comprovante' }}
   </button>

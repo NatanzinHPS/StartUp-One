@@ -17,14 +17,14 @@ export class LoginComponent {
     email: '',
     password: ''
   };
-  
+
   loading = false;
   errorMessage = '';
 
   constructor(
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
   onSubmit(): void {
     this.loading = true;

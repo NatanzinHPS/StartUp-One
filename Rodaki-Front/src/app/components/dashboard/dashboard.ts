@@ -24,7 +24,7 @@ export class DashboardComponent implements OnInit {
     private motoristaService: MotoristaService,
     private passageiroService: PassageiroService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadMotoristas();

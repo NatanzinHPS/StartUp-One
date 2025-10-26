@@ -1,81 +1,89 @@
 .container {
-max-width: 480px;
-background-color: #F8F9FA;
+    max-width: 480px;
+    background-color: #F8F9FA;
 }
 
 
 .day-row {
-border-radius: 0.75rem;
-transition: background-color 0.3s ease, transform 0.2s ease;
+    border-radius: 0.75rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 
 .day-row:hover {
-background-color: #E0F7E9 !important;
-transform: scale(1.01);
+    background-color: #E0F7E9 !important;
+    transform: scale(1.01);
 }
 
 
 .animate-highlight {
-animation: fadeIn 0.3s ease-in;
+    animation: fadeIn 0.3s ease-in;
 }
 
 
 @keyframes fadeIn {
-from { opacity: 0; transform: translateY(-5px); }
-to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 
 .selector-container .btn {
-border-radius: 0.5rem !important;
-font-weight: 500;
+    border-radius: 0.5rem !important;
+    font-weight: 500;
 }
 
 
 .form-check-input {
-width: 2.5em;
-height: 1.4em;
-transition: all 0.3s ease-in-out;
+    width: 2.5em;
+    height: 1.4em;
+    transition: all 0.3s ease-in-out;
 }
 
 
 .form-check-input:checked {
-background-color: #28A745;
-border-color: #28A745;
-box-shadow: 0 0 8px rgba(40, 167, 69, 0.4);
+    background-color: #28A745;
+    border-color: #28A745;
+    box-shadow: 0 0 8px rgba(40, 167, 69, 0.4);
 }
 
 
 .form-check-input:focus {
-box-shadow: 0 0 6px rgba(0, 86, 179, 0.5);
+    box-shadow: 0 0 6px rgba(0, 86, 179, 0.5);
 }
 
 
 .alert {
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
 }
 
 
 .alert i {
-font-size: 1.2rem;
+    font-size: 1.2rem;
 }
 
 
 h6.fw-bold i {
-vertical-align: middle;
+    vertical-align: middle;
 }
 
 
 @media (min-width: 768px) {
-.container {
-max-width: 700px !important;
-}
-.selector-container {
-width: 80%;
-margin: 0 auto;
-}
+    .container {
+        max-width: 700px !important;
+    }
+
+    .selector-container {
+        width: 80%;
+        margin: 0 auto;
+    }
 }
