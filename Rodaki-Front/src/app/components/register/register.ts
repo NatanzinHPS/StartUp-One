@@ -14,21 +14,21 @@ import { RegisterRequest, Role } from '../../models/user-model';
 })
 export class RegisterComponent {
   Role = Role;
-  
+
   userData: RegisterRequest = {
-    nome: '',
+    name: '',
     email: '',
-    senha: '',
+    password: '',
     role: '' as Role
   };
-  
+
   loading = false;
   errorMessage = '';
 
   constructor(
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
   onSubmit(): void {
     this.loading = true;

@@ -5,7 +5,7 @@ import { Motorista } from '../models/user-model';
 
 @Injectable({ providedIn: 'root' })
 export class MotoristaService {
-  private apiUrl = '/api/motoristas';
+  private apiUrl = 'http://localhost:8080/api/drivers';
 
   constructor(private http: HttpClient) {}
 

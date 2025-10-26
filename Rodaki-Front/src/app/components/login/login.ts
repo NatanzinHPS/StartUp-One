@@ -15,16 +15,16 @@ import { LoginRequest } from '../../models/user-model';
 export class LoginComponent {
   credentials: LoginRequest = {
     email: '',
-    senha: ''
+    password: ''
   };
-  
+
   loading = false;
   errorMessage = '';
 
   constructor(
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
   onSubmit(): void {
     this.loading = true;

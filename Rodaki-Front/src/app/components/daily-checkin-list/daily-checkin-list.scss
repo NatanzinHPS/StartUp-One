@@ -1,0 +1,56 @@
+.container {
+    max-width: 480px;
+    background-color: #F8F9FA;
+}
+
+.small-card {
+    border-radius: 0.75rem;
+}
+
+.status-present {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.status-absent {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.status-pending {
+    background-color: #fef9c3;
+    color: #92400e;
+}
+
+.passenger-item {
+    transition: transform 0.15s ease, background-color 0.3s ease;
+}
+
+.passenger-item:hover {
+    transform: scale(1.01);
+    background-color: #f8f9fa;
+}
+
+.filters {
+    white-space: nowrap;
+}
+
+.spinner {
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 700px;
+    }
+}

@@ -1,0 +1,117 @@
+<div class="container py-3" [@fadeTransition]>
+    <!-- Header -->
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <div class="d-flex align-items-center">
+            <img src="assets/LogoNoBG.png" alt="Rodaki" height="36" class="me-2" />
+            <h4 class="m-0 text-primary fw-bold">Rodaki</h4>
+        </div>
+        <img *ngIf="profile?.avatarUrl" [src]="profile?.avatarUrl" alt="avatar" class="avatar" />
+    </div>
+
+    <!-- Greeting & Status -->
+    <div class="card mb-3 shadow-sm">
+        <div class="card-body">
+            <div class="fw-bold mb-2 fs-5">
+                Olá, {{ (profile?.name || 'Passageiro').split(' ')[0] }}!
+            </div>
+            <div class="small text-muted mb-1 me-2">Status de hoje:
+                <span class="badge status-badge {{ statusBadgeClass(todayStatus) }}">
+                    {{ todayStatus ? ('Confirmado: ' + statusLabel(todayStatus).toUpperCase()) : 'Nenhuma seleção' }}
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Check-in control -->
+    <div class="card mb-3 shadow-sm">
+        <div class="card-body">
+            <h6 class="fw-bold mb-3">Check-in de Hoje</h6>
+
+            <div class="grid-actions mb-2">
+                <button class="action-card" [class.active]="todayStatus==='IDA'" (click)="setStatus('IDA')">
+                    <i class="bi bi-arrow-right-circle fs-3"></i>
+                    <div class="mt-1">Ida<br /><small class="text-muted">Manhã</small></div>
+                </button>
+
+                <button class="action-card" [class.active]="todayStatus==='VOLTA'" (click)="setStatus('VOLTA')">
+                    <i class="bi bi-arrow-left-circle fs-3"></i>
+                    <div class="mt-1">Volta<br /><small class="text-muted">Tarde</small></div>
+                </button>
+
+                <button class="action-card action-card--large" [class.active]="todayStatus==='AMBAS'"
+                    (click)="setStatus('AMBAS')">
+                    <i class="bi bi-arrow-left-right fs-3"></i>
+                    <div class="mt-1">Ambas<br /><small class="text-muted">Ida e Volta</small></div>
+                </button>
+
+                <button class="action-card action-card--large" [class.absent]="todayStatus==='AUSENTE'"
+                    (click)="setStatus('AUSENTE')">
+                    <i class="bi bi-x-circle fs-3"></i>
+                    <div class="mt-1">Ausente<br /><small class="text-muted">Não vou</small></div>
+                </button>
+            </div>
+
+            <div
+                class="small text-muted mt-2 bg-warning bg-opacity-10 border border-warning rounded-3 p-2 d-block w-100">
+                <i class="bi bi-clock me-2"></i>{{ deadlineText }}
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile card -->
+    <div class="card mb-3 shadow-sm">
+        <div class="card-body d-flex align-items-center gap-3">
+            <img *ngIf="profile?.avatarUrl" [src]="profile?.avatarUrl" alt="avatar" class="avatar-lg rounded-circle" />
+            <div class="flex-fill">
+                <div class="fw-bold">{{ profile?.name }}</div>
+                <div class="small text-muted mt-1"><i class="bi bi-geo-alt me-2"></i>{{ profile?.address }}</div>
+                <div class="small text-muted mt-1"><i class="bi bi-telephone me-2"></i>{{ profile?.phone }}</div>
+                <div class="small text-muted mt-1"><i class="bi bi-envelope me-2"></i>{{ profile?.email }}</div>
+            </div>
+        </div>
+        <div class="card-footer bg-transparent border-0">
+            <button class="btn btn-primary w-100" (click)="goToEditProfile()">
+                <i class="bi bi-pencil me-2"></i>Editar Dados
+            </button>
+        </div>
+    </div>
+
+    <!-- Payment and quick actions -->
+    <div class="card mb-3 shadow-sm">
+        <div class="card-body d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-credit-card-2-front text-success fs-4 me-3"></i>
+                <div>
+                    <div class="fw-bold">Pagamento em Dia</div>
+                    <div class="small text-muted">Próximo vencimento: 15/11</div>
+                </div>
+            </div>
+            <i class="bi bi-check-circle-fill text-success fs-4"></i>
+        </div>
+    </div>
+
+    <div class="list-group mb-3">
+        <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+            (click)="goToWeeklySchedule()">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-calendar3 text-primary fs-5 me-3"></i>
+                <div>
+                    <div class="fw-bold text-dark">Minha Agenda Semanal</div>
+                    <div class="small text-muted">Visualizar cronograma</div>
+                </div>
+            </div>
+            <i class="bi bi-chevron-right text-muted"></i>
+        </a>
+        <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+            (click)="goToUploadProof()">
+            <div class="d-flex align-items-center">
+                <i class="bi bi-file-earmark-arrow-up text-warning fs-5 me-3"></i>
+                <div>
+                    <div class="fw-bold text-dark">Enviar Comprovante</div>
+                    <div class="small text-muted">Upload de pagamento</div>
+                </div>
+            </div>
+            <i class="bi bi-chevron-right text-muted"></i>
+        </a>
+    </div>
+</div>

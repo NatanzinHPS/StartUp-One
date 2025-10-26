@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+
+/* Import Bootstrap Icons CSS so the icon class names (e.g. "bi bi-alarm") work */
+/* Use the package path without the tilde; Angular's Sass resolver prefers the node package name directly. */
+@import 'bootstrap-icons/font/bootstrap-icons.css';

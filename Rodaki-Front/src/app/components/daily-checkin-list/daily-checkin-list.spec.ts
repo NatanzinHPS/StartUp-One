@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RegisterComponent } from './register';
+import { DailyCheckinList } from './daily-checkin-list';
 
-describe('RegisterComponent', () => {
-  let component: RegisterComponent;
-  let fixture: ComponentFixture<RegisterComponent>;
+describe('DailyCheckinList', () => {
+  let component: DailyCheckinList;
+  let fixture: ComponentFixture<DailyCheckinList>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RegisterComponent]
+      imports: [DailyCheckinList]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(RegisterComponent);
+    fixture = TestBed.createComponent(DailyCheckinList);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

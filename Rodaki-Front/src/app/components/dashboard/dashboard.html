@@ -9,20 +9,17 @@
       <h2>Motoristas</h2>
 
       @if (loadingMotoristas) {
-        <div class="loading">Carregando...</div>
+      <div class="loading">Carregando...</div>
       }
 
       @if (!loadingMotoristas && motoristas.length === 0) {
-        <div class="empty">Nenhum motorista cadastrado</div>
+      <div class="empty">Nenhum motorista cadastrado</div>
       }
 
       <div class="cards">
         <div *ngFor="let motorista of motoristas" class="card">
-          <h3>{{ motorista.user.nome }}</h3>
+          <h3>{{ motorista.user.name }}</h3>
           <p><strong>Email:</strong> {{ motorista.user.email }}</p>
-          <p><strong>Veículo:</strong> {{ motorista.veiculo }}</p>
-          <p><strong>Placa:</strong> {{ motorista.placa }}</p>
-          <p><strong>Capacidade:</strong> {{ motorista.capacidade }} pessoas</p>
         </div>
       </div>
     </div>
@@ -31,18 +28,21 @@
       <h2>Passageiros</h2>
 
       @if (loadingPassageiros) {
-        <div class="loading">Carregando...</div>
+      <div class="loading">Carregando...</div>
       }
 
       @if (!loadingPassageiros && passageiros.length === 0) {
-        <div class="empty">Nenhum passageiro cadastrado</div>
+      <div class="empty">Nenhum passageiro cadastrado</div>
       }
 
       <div class="cards">
         <div *ngFor="let passageiro of passageiros" class="card">
-          <h3>{{ passageiro.user.nome }}</h3>
+          <h3>{{ passageiro.user.name }}</h3>
           <p><strong>Email:</strong> {{ passageiro.user.email }}</p>
-          <p><strong>Endereço:</strong> {{ passageiro.endereco }}</p>
+          <p><strong>Endereços:</strong></p>
+          <ul>
+            <li *ngFor="let endereco of passageiro.addresses">{{ endereco }}</li>
+          </ul>
         </div>
       </div>
     </div>
