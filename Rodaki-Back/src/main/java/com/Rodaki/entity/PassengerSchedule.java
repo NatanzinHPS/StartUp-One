@@ -15,21 +15,38 @@ public class PassengerSchedule {
     private Passenger passenger;
 
     @Column(name = "day_of_week", nullable = false)
-    private Integer dayOfWeek; // 1=Monday, 7=Sunday
+    private Integer dayOfWeek;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Schedule schedule;
+    @Column(name = "period", nullable = false)
+    private Period period;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "trip_type", nullable = false)
+    private TripType tripType;
 
     @Column(name = "is_active")
     private Boolean isActive = true;
 
+    public enum Period {
+        MORNING,
+        AFTERNOON,
+        NIGHT
+    }
+
+    public enum TripType {
+        ONE_WAY,
+        RETURN,
+        ROUND_TRIP
+    }
+
     public PassengerSchedule() {}
 
-    public PassengerSchedule(Passenger passenger, Integer dayOfWeek, Schedule schedule) {
+    public PassengerSchedule(Passenger passenger, Integer dayOfWeek, Period period, TripType tripType) {
         this.passenger = passenger;
         this.dayOfWeek = dayOfWeek;
-        this.schedule = schedule;
+        this.period = period;
+        this.tripType = tripType;
         this.isActive = true;
     }
 
@@ -42,15 +59,13 @@ public class PassengerSchedule {
     public Integer getDayOfWeek() { return dayOfWeek; }
     public void setDayOfWeek(Integer dayOfWeek) { this.dayOfWeek = dayOfWeek; }
 
-    public Schedule getSchedule() { return schedule; }
-    public void setSchedule(Schedule schedule) { this.schedule = schedule; }
+    public Period getPeriod() { return period; }
+    public void setPeriod(Period period) { this.period = period; }
+
+    public TripType getTripType() { return tripType; }
+    public void setTripType(TripType tripType) { this.tripType = tripType; }
 
     public Boolean getIsActive() { return isActive; }
     public void setIsActive(Boolean isActive) { this.isActive = isActive; }
 
-    public enum Schedule {
-        MORNING,
-        AFTERNOON,
-        BOTH
-    }
 }

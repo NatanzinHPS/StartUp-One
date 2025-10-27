@@ -2,6 +2,7 @@ package com.Rodaki.dto;
 
 import com.Rodaki.entity.Role;
 import com.Rodaki.entity.User;
+import java.time.LocalDateTime;
 
 public class UserDTO {
     private Long id;
@@ -9,6 +10,11 @@ public class UserDTO {
     private String email;
     private String phone;
     private Role role;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    
+    private Long passengerId;
+    private Long driverId;
 
     public UserDTO() {}
 
@@ -18,6 +24,8 @@ public class UserDTO {
         this.email = user.getEmail();
         this.phone = user.getPhone();
         this.role = user.getRole();
+        this.createdAt = user.getCreatedAt();
+        this.updatedAt = user.getUpdatedAt();
     }
 
     public Long getId() { return id; }
@@ -34,4 +42,16 @@ public class UserDTO {
 
     public Role getRole() { return role; }
     public void setRole(Role role) { this.role = role; }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+
+    public Long getPassengerId() { return passengerId; }
+    public void setPassengerId(Long passengerId) { this.passengerId = passengerId; }
+
+    public Long getDriverId() { return driverId; }
+    public void setDriverId(Long driverId) { this.driverId = driverId; }
 }
