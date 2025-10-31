@@ -1,7 +1,8 @@
 package com.Rodaki.controller;
 
 import com.Rodaki.dto.PassengerScheduleDTO;
-import com.Rodaki.entity.PassengerSchedule;
+import com.Rodaki.entity.PassengerSchedule.Period;
+import com.Rodaki.entity.PassengerSchedule.TripType;
 import com.Rodaki.service.PassengerScheduleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,11 +26,12 @@ public class PassengerScheduleController {
     public ResponseEntity<PassengerScheduleDTO> create(@RequestBody Map<String, Object> request) {
         Long passengerId = Long.valueOf(request.get("passengerId").toString());
         Integer dayOfWeek = Integer.valueOf(request.get("dayOfWeek").toString());
-        PassengerSchedule.Schedule schedule = PassengerSchedule.Schedule.valueOf(
-            request.get("schedule").toString()
-        );
 
-        var created = scheduleService.create(passengerId, dayOfWeek, schedule);
+        Period period = Period.valueOf(request.get("period").toString());
+        TripType tripType = TripType.valueOf(request.get("tripType").toString());
+
+        var created = scheduleService.create(passengerId, dayOfWeek, period, tripType);
+
         return ResponseEntity.ok(new PassengerScheduleDTO(created));
     }
 
@@ -56,16 +58,19 @@ public class PassengerScheduleController {
     @PutMapping("/{id}")
     public ResponseEntity<PassengerScheduleDTO> update(@PathVariable Long id,
                                                        @RequestBody Map<String, Object> request) {
-        Integer dayOfWeek = request.containsKey("dayOfWeek") 
+        Integer dayOfWeek = request.containsKey("dayOfWeek")
             ? Integer.valueOf(request.get("dayOfWeek").toString()) : null;
-        
-        PassengerSchedule.Schedule schedule = request.containsKey("schedule")
-            ? PassengerSchedule.Schedule.valueOf(request.get("schedule").toString()) : null;
-        
+
+        Period period = request.containsKey("period")
+            ? Period.valueOf(request.get("period").toString()) : null;
+
+        TripType tripType = request.containsKey("tripType")
+            ? TripType.valueOf(request.get("tripType").toString()) : null;
+
         Boolean isActive = request.containsKey("isActive")
             ? Boolean.valueOf(request.get("isActive").toString()) : null;
 
-        var updated = scheduleService.update(id, dayOfWeek, schedule, isActive);
+        var updated = scheduleService.update(id, dayOfWeek, period, tripType, isActive);
         return ResponseEntity.ok(new PassengerScheduleDTO(updated));
     }
 

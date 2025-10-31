@@ -2,6 +2,8 @@ package com.Rodaki.service;
 
 import com.Rodaki.entity.Passenger;
 import com.Rodaki.entity.PassengerSchedule;
+import com.Rodaki.entity.PassengerSchedule.Period;
+import com.Rodaki.entity.PassengerSchedule.TripType;
 import com.Rodaki.repository.PassengerRepository;
 import com.Rodaki.repository.PassengerScheduleRepository;
 import org.springframework.stereotype.Service;
@@ -22,12 +24,12 @@ public class PassengerScheduleService {
     }
 
     @Transactional
-    public PassengerSchedule create(Long passengerId, Integer dayOfWeek, 
-                                   PassengerSchedule.Schedule schedule) {
+    public PassengerSchedule create(Long passengerId, Integer dayOfWeek,
+                                   Period period, TripType tripType) {
         Passenger passenger = passengerRepository.findById(passengerId)
-                .orElseThrow(() -> new RuntimeException("Passageiro não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Passenger not found"));
 
-        PassengerSchedule newSchedule = new PassengerSchedule(passenger, dayOfWeek, schedule);
+        PassengerSchedule newSchedule = new PassengerSchedule(passenger, dayOfWeek, period, tripType);
         return scheduleRepository.save(newSchedule);
     }
 
@@ -43,14 +45,16 @@ public class PassengerScheduleService {
         return scheduleRepository.findByPassengerIdAndDayOfWeek(passengerId, dayOfWeek);
     }
 
+
     @Transactional
-    public PassengerSchedule update(Long id, Integer dayOfWeek, 
-                                   PassengerSchedule.Schedule schedule, Boolean isActive) {
+    public PassengerSchedule update(Long id, Integer dayOfWeek,
+                                   Period period, TripType tripType, Boolean isActive) {
         PassengerSchedule existing = scheduleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Agendamento não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Schedule not found"));
 
         if (dayOfWeek != null) existing.setDayOfWeek(dayOfWeek);
-        if (schedule != null) existing.setSchedule(schedule);
+        if (period != null) existing.setPeriod(period);
+        if (tripType != null) existing.setTripType(tripType);
         if (isActive != null) existing.setIsActive(isActive);
 
         return scheduleRepository.save(existing);
@@ -59,7 +63,7 @@ public class PassengerScheduleService {
     @Transactional
     public void delete(Long id) {
         if (!scheduleRepository.existsById(id)) {
-            throw new RuntimeException("Agendamento não encontrado");
+            throw new RuntimeException("Schedule not found");
         }
         scheduleRepository.deleteById(id);
     }
@@ -67,8 +71,8 @@ public class PassengerScheduleService {
     @Transactional
     public PassengerSchedule toggleActive(Long id) {
         PassengerSchedule schedule = scheduleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Agendamento não encontrado"));
-        
+                .orElseThrow(() -> new RuntimeException("Schedule not found"));
+
         schedule.setIsActive(!schedule.getIsActive());
         return scheduleRepository.save(schedule);
     }
