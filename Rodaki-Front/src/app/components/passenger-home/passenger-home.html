@@ -1,14 +1,14 @@
 <div class="container py-3">
-    <!-- Header -->
     <div class="d-flex align-items-center justify-content-between mb-3">
         <div class="d-flex align-items-center">
             <img src="assets/LogoNoBG.png" alt="Rodaki" height="36" class="me-2" />
             <h4 class="m-0 text-primary fw-bold">Rodaki</h4>
         </div>
-        <img *ngIf="profile?.avatarUrl" [src]="profile?.avatarUrl" alt="avatar" class="avatar" />
+        @if (profile?.avatarUrl) {
+            <img [src]="profile?.avatarUrl" alt="avatar" class="avatar" />
+        }
     </div>
 
-    <!-- Greeting & Status -->
     <div class="card mb-3 shadow-sm">
         <div class="card-body">
             <div class="fw-bold mb-2 fs-5">
@@ -16,13 +16,16 @@
             </div>
             <div class="small text-muted mb-1 me-2">Status de hoje:
                 <span class="badge status-badge {{ statusBadgeClass(todayStatus) }}">
-                    {{ todayStatus ? ('Confirmado: ' + statusLabel(todayStatus).toUpperCase()) : 'Nenhuma seleção' }}
+                    @if (todayStatus) {
+                        Confirmado: {{ statusLabel(todayStatus).toUpperCase() }}
+                    } @else {
+                        Nenhuma seleção
+                    }
                 </span>
             </div>
         </div>
     </div>
 
-    <!-- Check-in control -->
     <div class="card mb-3 shadow-sm">
         <div class="card-body">
             <h6 class="fw-bold mb-3">Check-in de Hoje</h6>
@@ -58,10 +61,11 @@
         </div>
     </div>
 
-    <!-- Profile card -->
     <div class="card mb-3 shadow-sm">
         <div class="card-body d-flex align-items-center gap-3">
-            <img *ngIf="profile?.avatarUrl" [src]="profile?.avatarUrl" alt="avatar" class="avatar-lg rounded-circle" />
+            @if (profile?.avatarUrl) {
+                <img [src]="profile?.avatarUrl" alt="avatar" class="avatar-lg rounded-circle" />
+            }
             <div class="flex-fill">
                 <div class="fw-bold">{{ profile?.name }}</div>
                 <div class="small text-muted mt-1"><i class="bi bi-geo-alt me-2"></i>{{ profile?.address }}</div>
@@ -76,7 +80,6 @@
         </div>
     </div>
 
-    <!-- Payment and quick actions -->
     <div class="card mb-3 shadow-sm">
         <div class="card-body d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center">
