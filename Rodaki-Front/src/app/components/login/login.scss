@@ -1,146 +1,86 @@
-$primary-start: #667eea;
-$primary-end: #764ba2;
-$error-color: #e74c3c;
-$text-dark: #333;
-$text-light: #555;
-$radius: 8px;
-
-@mixin gradient-bg($start, $end) {
-  background: linear-gradient(135deg, $start 0%, $end 100%);
-}
-
-@mixin input-style {
-  width: 100%;
-  padding: 0.75rem;
-  border: 2px solid #ddd;
-  border-radius: $radius;
-  font-size: 1rem;
-  transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.login-wrapper {
   min-height: 100vh;
-  @include gradient-bg($primary-start, $primary-end);
-  animation: fadeIn 0.6s ease;
+  background-color: #F8F9FA;
+  padding: 1.5rem;
+}
 
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+.logo {
+  width: 70px;
+  height: auto;
 }
 
 .login-card {
-  background: #fff;
-  padding: 2.5rem 2rem;
-  border-radius: 15px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
   width: 100%;
-  max-width: 420px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
-  }
+  max-width: 380px;
+  background: #ffffff;
+  border-radius: 1rem;
+  transition: all 0.3s ease;
 }
 
-h1 {
-  text-align: center;
-  color: $text-dark;
-  margin-bottom: 2rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
+.login-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
 }
 
-.form-group {
-  margin-bottom: 1.5rem;
-
-  label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: $text-light;
-    font-weight: 600;
-  }
-
-  input {
-    @include input-style;
-
-    &:focus {
-      outline: none;
-      border-color: $primary-start;
-      box-shadow: 0 0 6px rgba(102, 126, 234, 0.4);
-    }
-
-    &.ng-invalid.ng-touched {
-      border-color: $error-color;
-    }
-  }
-
-  .error {
-    color: $error-color;
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
-  }
+.form-control {
+  border-radius: 0.6rem;
+  border: 1px solid #ced4da;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.error-message {
-  background: #fee;
-  color: darken($error-color, 10%);
-  padding: 0.75rem;
-  border-radius: 5px;
-  margin-bottom: 1rem;
-  text-align: center;
-  font-weight: 500;
+.form-control:focus {
+  border-color: #0056B3;
+  box-shadow: 0 0 0 0.15rem rgba(0, 86, 179, 0.2);
 }
 
-button {
-  width: 100%;
-  padding: 0.85rem;
-  @include gradient-bg($primary-start, $primary-end);
-  color: #fff;
-  border: none;
-  border-radius: $radius;
-  font-size: 1.05rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+button.btn {
+  border-radius: 0.6rem;
+  transition: all 0.25s ease-in-out;
+}
 
-  &:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(118, 75, 162, 0.3);
-  }
+button.btn:hover {
+  background-color: darken(#0056B3, 8%);
+  transform: translateY(-2px);
+}
 
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
+.alert {
+  border-radius: 0.5rem;
+}
+
+.error {
+  color: #dc3545;
 }
 
 .register-link {
-  text-align: center;
-  margin-top: 1.8rem;
-  color: #666;
-  font-size: 0.95rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
 
-  a {
-    color: $primary-start;
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.2s;
+.register-link:hover {
+  text-decoration: underline;
+  color: darken(#0056B3, 10%);
+}
 
-    &:hover {
-      text-decoration: underline;
-      color: lighten($primary-start, 5%);
-    }
+/* Spinner animation */
+.spinner {
+  display: inline-block;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Mobile-first */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 1rem;
+    border-radius: 0.75rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
   }
 }

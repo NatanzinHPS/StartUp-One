@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterOutlet, Router } from '@angular/router';
-import { trigger, transition, style, animate } from '@angular/animations';
+import { Router } from '@angular/router';
 import { PassengerProfile, PassengerProfileService } from '../../services/passenger-profile';
 import { CheckinService, TodayCheckin } from '../../services/checkin';
 
@@ -10,18 +9,7 @@ import { CheckinService, TodayCheckin } from '../../services/checkin';
   selector: 'app-passenger-home',
   imports: [CommonModule, FormsModule],
   templateUrl: './passenger-home.html',
-  styleUrls: ['./passenger-home.scss'],
-  animations: [
-    trigger('fadeTransition', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('350ms ease-in-out', style({ opacity: 1 }))
-      ]),
-      transition(':leave', [
-        animate('250ms ease-in-out', style({ opacity: 0 }))
-      ])
-    ])
-  ]
+  styleUrls: ['./passenger-home.scss']
 })
 
 export class PassengerHome implements OnInit {
