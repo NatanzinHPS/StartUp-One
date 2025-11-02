@@ -8,7 +8,6 @@
   <div class="register-card shadow-sm animate-fade">
     <form (ngSubmit)="onSubmit()" #registerForm="ngForm" class="p-3">
 
-      <!-- Campo Nome -->
       <div class="form-group mb-3">
         <label for="name" class="form-label fw-semibold">
           <i class="bi bi-person me-2 text-primary"></i>Nome Completo
@@ -23,12 +22,13 @@
           class="form-control"
           placeholder="Digite seu nome completo"
         />
-        <div *ngIf="name.invalid && name.touched" class="error small mt-1">
-          Nome é obrigatório
-        </div>
+        @if (name.invalid && name.touched) {
+          <div class="error small mt-1">
+            Nome é obrigatório
+          </div>
+        }
       </div>
 
-      <!-- Campo Email -->
       <div class="form-group mb-3">
         <label for="email" class="form-label fw-semibold">
           <i class="bi bi-envelope me-2 text-primary"></i>Email
@@ -44,12 +44,13 @@
           class="form-control"
           placeholder="exemplo@email.com"
         />
-        <div *ngIf="email.invalid && email.touched" class="error small mt-1">
-          Email inválido
-        </div>
+        @if (email.invalid && email.touched) {
+          <div class="error small mt-1">
+            Email inválido
+          </div>
+        }
       </div>
 
-      <!-- Campo Senha -->
       <div class="form-group mb-3">
         <label for="password" class="form-label fw-semibold">
           <i class="bi bi-lock me-2 text-primary"></i>Senha
@@ -65,12 +66,13 @@
           class="form-control"
           placeholder="Crie uma senha"
         />
-        <div *ngIf="password.invalid && password.touched" class="error small mt-1">
-          Senha deve ter no mínimo 6 caracteres
-        </div>
+        @if (password.invalid && password.touched) {
+          <div class="error small mt-1">
+            Senha deve ter no mínimo 6 caracteres
+          </div>
+        }
       </div>
 
-      <!-- Campo Tipo de Usuário -->
       <div class="form-group mb-3">
         <label for="role" class="form-label fw-semibold">
           <i class="bi bi-person-badge me-2 text-primary"></i>Eu sou...
@@ -87,28 +89,33 @@
           <option [value]="Role.ROLE_PASSAGEIRO">Passageiro</option>
           <option [value]="Role.ROLE_MOTORISTA">Motorista</option>
         </select>
-        <div *ngIf="role.invalid && role.touched" class="error small mt-1">
-          Selecione o tipo de usuário
+        @if (role.invalid && role.touched) {
+          <div class="error small mt-1">
+            Selecione o tipo de usuário
+          </div>
+        }
+      </div>
+
+      @if (errorMessage) {
+        <div class="alert alert-danger small py-2 mb-3">
+          <i class="bi bi-exclamation-triangle me-2"></i>{{ errorMessage }}
         </div>
-      </div>
+      }
 
-      <!-- Mensagem de erro -->
-      <div *ngIf="errorMessage" class="alert alert-danger small py-2 mb-3">
-        <i class="bi bi-exclamation-triangle me-2"></i>{{ errorMessage }}
-      </div>
-
-      <!-- Botão Registrar -->
       <button
         type="submit"
         class="btn btn-primary w-100 fw-semibold py-2"
         [disabled]="registerForm.invalid || loading"
       >
-        <span *ngIf="!loading"><i class="bi bi-person-plus me-2"></i>Registrar</span>
-        <span *ngIf="loading"><i class="bi bi-arrow-repeat spinner me-2"></i>Registrando...</span>
+        @if (!loading) {
+          <span><i class="bi bi-person-plus me-2"></i>Registrar</span>
+        }
+        @if (loading) {
+          <span><i class="bi bi-arrow-repeat spinner me-2"></i>Registrando...</span>
+        }
       </button>
     </form>
 
-    <!-- Link para Login -->
     <div class="text-center mt-3">
       <p class="text-muted small mb-1">Já tem conta?</p>
       <a [routerLink]="['/login']" class="text-primary fw-semibold login-link">
