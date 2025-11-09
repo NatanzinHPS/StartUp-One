@@ -1,34 +1,36 @@
 <div class="container py-3" style="max-width:480px;background-color:#F8F9FA;">
-  <div class="d-flex align-items-center mb-3">
-    <img src="assets/LogoNoBG.png" alt="Rodaki" height="40" class="me-2" />
-    <h4 class="m-0 text-primary fw-bold">Enviar Comprovante</h4>
-  </div>
+  <app-top-bar [profileImage]="'assets/avatar-female.jpg'" [redirectTo]="'/passenger-home'"
+    [title]="'Enviar Comprovante'">
+  </app-top-bar>
 
   <div class="card mb-3 shadow-sm">
     <div class="card-body d-flex align-items-center">
-      <div class="avatar rounded-circle bg-light d-flex align-items-center justify-content-center me-3">
-        <i class="bi bi-person-fill text-primary"></i>
+      <div class="profile-container">
+        <img [src]="'assets/DriverProfile.png'" alt="Profile" class="profile-img shadow-sm" />
       </div>
       <div>
         <div class="small text-muted">Enviando comprovante para</div>
-        <div class="fw-bold">Paulo</div>
+        <div class="fw-bold mb-1">Paulo Roberto dos Santos</div>
+        <div class="small text-muted">Chave PIX: <strong>12.123.123/0001-23</strong></div>
       </div>
     </div>
   </div>
 
   <div class="card mb-3 shadow-sm">
     <div class="card-body">
-      <label class="form-label small d-flex align-items-center"><i class="bi bi-calendar3 me-2"></i> Mês de
+      <label class="form-label d-flex align-items-center"><i class="bi bi-calendar3 me-2"></i> Mês de
         Referência</label>
       <select class="form-select" [(ngModel)]="model.referenceMonth">
-        <option *ngFor="let m of months" [value]="m.value">{{m.label}}</option>
+        @for (m of months; track m.value) {
+        <option [value]="m.value">{{m.label}}</option>
+        }
       </select>
     </div>
   </div>
 
   <div class="card mb-3 shadow-sm">
     <div class="card-body">
-      <label class="form-label small d-flex align-items-center"><i class="bi bi-currency-dollar me-2"></i> Valor
+      <label class="form-label d-flex align-items-center"><i class="bi bi-currency-dollar me-2"></i> Valor
         Pago</label>
       <input type="number" class="form-control" [(ngModel)]="model.amount" min="0" step="0.01" placeholder="R$ 0,00" />
     </div>
@@ -36,13 +38,14 @@
 
   <div class="card mb-3 shadow-sm">
     <div class="card-body">
-      <label class="form-label small d-flex align-items-center"><i class="bi bi-paperclip me-2"></i> Comprovante de
+      <label class="form-label d-flex align-items-center"><i class="bi bi-paperclip me-2"></i> Comprovante de
         Pagamento</label>
 
       <div class="upload-dropzone mt-2 p-3 text-center rounded" [class.dragover]="dragOver" (drop)="onDrop($event)"
         (dragover)="onDragOver($event)" (dragleave)="onDragLeave()">
 
-        <div *ngIf="!fileBuffer" class="placeholder">
+        @if (!fileBuffer) {
+        <div class="placeholder">
           <i class="bi bi-cloud-upload fs-1 text-primary"></i>
           <div class="fw-bold mt-2">Adicionar arquivo</div>
           <div class="text-muted small">Arraste e solte ou clique para selecionar</div>
@@ -55,26 +58,35 @@
             </button>
           </div>
         </div>
+        }
 
-        <div *ngIf="fileBuffer" class="preview">
-          <div *ngIf="model.fileType?.startsWith('image/')">
+        @if (fileBuffer) {
+        <div class="preview">
+          @if (model.fileType?.startsWith('image/')) {
+          <div>
             <img [src]="model.fileDataUrl" alt="preview" class="img-fluid rounded" />
           </div>
-          <div *ngIf="model.fileType === 'application/pdf'" class="p-2">
+          }
+          @if (model.fileType === 'application/pdf') {
+          <div class="p-2">
             <i class="bi bi-file-earmark-pdf fs-1 text-danger"></i>
             <div class="fw-bold mt-2">{{ model.fileName }}</div>
           </div>
+          }
           <div class="mt-2 text-muted small">Apenas Imagens e PDF. Máx: 10MB</div>
           <div class="mt-2">
             <button class="btn btn-outline-secondary btn-sm me-2" (click)="removeFile($event)">Remover</button>
           </div>
         </div>
+        }
 
         <input #fileInput type="file" accept="image/*,application/pdf" class="d-none"
           (change)="onFileSelected($event.target.files?.[0] ?? null)" />
       </div>
 
-      <div *ngIf="errorMessage" class="text-danger small mt-2">{{ errorMessage }}</div>
+      @if (errorMessage) {
+      <div class="text-danger small mt-2">{{ errorMessage }}</div>
+      }
     </div>
   </div>
 
@@ -82,5 +94,9 @@
     [ngClass]="{'btn-primary': isFormValid() && !uploading, 'btn-secondary': !isFormValid()}">
     <i class="bi bi-send me-2"></i>
     {{ uploading ? 'Enviando...' : 'Enviar Comprovante' }}
+  </button>
+
+  <button (click)="goToPassengerHome()" class="btn btn-outline-secondary w-100 fw-bold mt-2">
+    <i class="bi bi-arrow-left me-2"></i>Voltar
   </button>
 </div>

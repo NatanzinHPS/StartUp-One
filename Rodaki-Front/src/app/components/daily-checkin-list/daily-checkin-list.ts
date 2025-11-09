@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { PassengerList, PassengerStatus } from '../../services/passenger-list';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { BottomNav } from '../bottom-nav/bottom-nav';
+import { TopBar } from '../top-bar/top-bar';
 
 @Component({
   selector: 'app-daily-checkin-list',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TopBar, BottomNav],
   templateUrl: './daily-checkin-list.html',
   styleUrls: ['./daily-checkin-list.scss'],
 })

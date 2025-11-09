@@ -1,13 +1,6 @@
 <div class="container py-3">
-  <div class="d-flex align-items-center justify-content-between mb-3">
-    <div class="d-flex align-items-center">
-      <img src="assets/LogoNoBG.png" alt="Rodaki" height="40" class="me-2" />
-      <h4 class="m-0 text-primary fw-bold">Rodaki</h4>
-    </div>
-    <button class="btn btn-primary fw-semibold">
-      <i class="bi bi-people-fill me-2"></i>Gerenciar Passageiros
-    </button>
-  </div>
+  <app-top-bar [profileImage]="'assets/DriverProfile.png'" [redirectTo]="'/daily-checkin'" [title]="'Check-in de Hoje'">
+  </app-top-bar>
 
   <!-- Summary Cards -->
   <div class="row g-2 mb-3 text-center">
@@ -47,15 +40,17 @@
 
   <!-- Filter Buttons -->
   <div class="filters mb-3 d-flex gap-2 overflow-auto pb-1">
-    <button *ngFor="let f of filters" (click)="setFilter(f.key)" class="btn px-3 fw-semibold flex-shrink-0" [ngClass]="{
-              'btn-primary': f.key==='TODOS' && activeFilter==='TODOS',
-              'btn-success': f.key==='PRESENTE' && activeFilter==='PRESENTE',
-              'btn-danger': f.key==='AUSENTE' && activeFilter==='AUSENTE',
-              'btn-warning': f.key==='PENDENTE' && activeFilter==='PENDENTE',
-              'btn-outline-secondary': activeFilter!==f.key
-            }">
-      {{ f.label }}
-    </button>
+    @for (f of filters; track f.key) {
+      <button (click)="setFilter(f.key)" class="btn px-3 fw-semibold flex-shrink-0" [ngClass]="{
+                'btn-primary': f.key==='TODOS' && activeFilter==='TODOS',
+                'btn-success': f.key==='PRESENTE' && activeFilter==='PRESENTE',
+                'btn-danger': f.key==='AUSENTE' && activeFilter==='AUSENTE',
+                'btn-warning': f.key==='PENDENTE' && activeFilter==='PENDENTE',
+                'btn-outline-secondary': activeFilter!==f.key
+              }">
+        {{ f.label }}
+      </button>
+    }
   </div>
 
   <!-- Search -->
@@ -68,23 +63,32 @@
   </div>
 
   <!-- Passenger List -->
-  <div *ngFor="let p of filteredPassengers" class="card border-0 shadow-sm mb-2 passenger-item">
-    <div class="card-body d-flex justify-content-between align-items-center">
-      <div>
-        <div class="fw-bold">{{ p.name }}</div>
-        <small class="text-muted d-block">{{ p.route }} • {{ p.time }}</small>
-        <small *ngIf="p.tripType" class="d-flex align-items-center mt-1">
-          <i [class]="getTripIcon(p.tripType)" class="me-1"></i>
-          <span class="text-muted">{{ getTripLabel(p.tripType) }}</span>
-        </small>
+  @for (p of filteredPassengers; track p.name) {
+    <div class="card border-0 shadow-sm mb-2 passenger-item">
+      <div class="card-body d-flex justify-content-between align-items-center">
+        <div>
+          <div class="fw-bold">{{ p.name }}</div>
+          <small class="text-muted d-block">{{ p.route }} • {{ p.time }}</small>
+
+          @if (p.tripType) {
+            <small class="d-flex align-items-center mt-1">
+              <i [class]="getTripIcon(p.tripType)" class="me-1"></i>
+              <span class="text-muted">{{ getTripLabel(p.tripType) }}</span>
+            </small>
+          }
+        </div>
+        <span [ngClass]="{
+          'status-present': p.status==='PRESENTE',
+          'status-absent': p.status==='AUSENTE',
+          'status-pending': p.status==='PENDENTE'
+        }" class="px-3 py-1 rounded-pill text-xs fw-semibold">
+          {{ p.status }}
+        </span>
       </div>
-      <span [ngClass]="{
-        'status-present': p.status==='PRESENTE',
-        'status-absent': p.status==='AUSENTE',
-        'status-pending': p.status==='PENDENTE'
-      }" class="px-3 py-1 rounded-pill text-xs fw-semibold">
-        {{ p.status }}
-      </span>
     </div>
-  </div>
+  }
+
+  <!-- bottom nav for mobile -->
+  <br>
+  <app-bottom-nav></app-bottom-nav>
 </div>
