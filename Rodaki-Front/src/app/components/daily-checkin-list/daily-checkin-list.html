@@ -78,11 +78,11 @@
           }
         </div>
         <span [ngClass]="{
-          'status-present': p.status==='PRESENTE',
-          'status-absent': p.status==='AUSENTE',
-          'status-pending': p.status==='PENDENTE'
+          'status-present': p.useStatus==='PRESENTE',
+          'status-absent': p.useStatus==='AUSENTE',
+          'status-pending': p.useStatus==='PENDENTE'
         }" class="px-3 py-1 rounded-pill text-xs fw-semibold">
-          {{ p.status }}
+          {{ p.useStatus }}
         </span>
       </div>
     </div>

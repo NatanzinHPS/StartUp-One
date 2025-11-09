@@ -62,9 +62,9 @@ export class DailyCheckinList implements OnInit {
   updateStats() {
     const prev = { ...this.animatedStats };
     this.total = this.allPassengers.length;
-    this.presentes = this.allPassengers.filter(p => p.status === 'PRESENTE').length;
-    this.ausentes = this.allPassengers.filter(p => p.status === 'AUSENTE').length;
-    this.pendentes = this.allPassengers.filter(p => p.status === 'PENDENTE').length;
+    this.presentes = this.allPassengers.filter(p => p.useStatus === 'PRESENTE').length;
+    this.ausentes = this.allPassengers.filter(p => p.useStatus === 'AUSENTE').length;
+    this.pendentes = this.allPassengers.filter(p => p.useStatus === 'PENDENTE').length;
 
     this.animateValue('total', prev.total, this.total);
     this.animateValue('presentes', prev.presentes, this.presentes);
@@ -77,7 +77,7 @@ export class DailyCheckinList implements OnInit {
     const filtered = this.allPassengers.filter(p => {
       const matchTerm = p.name.toLowerCase().includes(term);
       if (this.activeFilter === 'TODOS') return matchTerm;
-      return matchTerm && p.status === this.activeFilter;
+      return matchTerm && p.useStatus === this.activeFilter;
     });
     this.filteredPassengers = filtered;
   }
