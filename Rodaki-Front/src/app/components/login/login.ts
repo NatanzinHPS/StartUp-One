@@ -32,7 +32,8 @@ export class LoginComponent {
 
     this.authService.login(this.credentials).subscribe({
       next: () => {
-        this.router.navigate(['/dashboard']);
+        const redirectUrl = this.authService.getRedirectUrlByRole();
+        this.router.navigate([redirectUrl]);
       },
       error: (error) => {
         this.errorMessage = error.error?.error || 'Erro ao fazer login';

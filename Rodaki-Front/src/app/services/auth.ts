@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, tap } from 'rxjs';
-import { AuthResponse, LoginRequest, RegisterRequest } from '../models/user-model';
+import { AuthResponse, LoginRequest, RegisterRequest, Role } from '../models/user-model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -45,5 +45,33 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     return this.hasToken();
+  }
+
+  getUserRole(): Role | null {
+    const token = this.getToken();
+    if (!token) return null;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.role || null;
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return null;
+    }
+  }
+
+  getRedirectUrlByRole(): string {
+    const role = this.getUserRole();
+    
+    switch (role) {
+      case Role.ROLE_PASSAGEIRO:
+        return '/passenger-home';
+      case Role.ROLE_MOTORISTA:
+        return '/daily-checkin';
+      case Role.ROLE_ADMIN:
+        return '/dashboard';
+      default:
+        return '/dashboard';
+    }
   }
 }
