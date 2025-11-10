@@ -1,24 +1,23 @@
 <div class="container py-3" style="max-width:480px;background-color:#F8F9FA;">
-  <div class="d-flex align-items-center mb-3">
-    <img src="assets/LogoNoBG.png" alt="Rodaki" height="40" class="me-2" />
-    <h4 class="m-0 text-primary fw-bold">Minha Agenda Semanal</h4>
-    <i class="bi bi-info-circle ms-2 text-secondary" title="Defina os dias e horários em que usará o transporte"></i>
-  </div>
+  <app-top-bar [profileImage]="'assets/avatar-female.jpg'" [redirectTo]="'/passenger-home'"
+    [title]="'Minha Agenda Semanal'">
+  </app-top-bar>
 
   <div class="alert alert-warning py-2 small text-center d-flex align-items-center justify-content-center gap-2"
-    role="alert">
+    role="alert" style="border-radius: 12px;">
     <i class="bi bi-clock-history text-warning fs-5"></i>
     <span>Limite para alterações diárias até as <strong>16:15</strong></span>
   </div>
 
-  <div class="card shadow-sm border-0 mb-3">
+  <div class="card shadow-sm border-0 mb-3" style="border-radius: 12px;">
     <div class="card-body">
       <h6 class="fw-bold mb-3 d-flex align-items-center">
-        <i class="bi bi-calendar3 me-2"></i> Dias da Semana
+        <i class="bi bi-calendar3 me-2"></i> Dias da semana em que utilizo o serviço:
       </h6>
 
-      <div *ngFor="let day of weekDays" class="day-row mb-3 p-2 rounded"
-        [style.background-color]="getDayColor(day.dayOfWeek)">
+      @for (day of weekDays; track day.dayOfWeek) {
+      <div class="day-row mb-3 p-2"
+        [ngStyle]="{ 'background-color': getDayColor(day.dayOfWeek), 'border-radius': '12px' }">
         <div class="d-flex align-items-center justify-content-between">
           <span class="fw-medium">{{ day.name }}</span>
           <div class="form-check form-switch">
@@ -27,35 +26,38 @@
           </div>
         </div>
 
-        <div *ngIf="day.isActive" class="selector-container text-center mt-2 animate-highlight">
+        @if (day.isActive) {
+        <div class="selector-container text-center mt-2 animate-highlight">
           <div class="btn-group w-100" role="group">
             <input type="radio" class="btn-check" name="segment-{{day.dayOfWeek}}" id="ida-{{day.dayOfWeek}}"
               value="MORNING" [(ngModel)]="day.schedule" />
             <label class="btn btn-outline-success w-100 m-1 d-flex align-items-center justify-content-center"
               for="ida-{{day.dayOfWeek}}">
-              <i class="bi bi-sunrise me-1"></i> Ida
+              <i class="bi bi-arrow-right-circle me-1"></i> Ida
             </label>
 
             <input type="radio" class="btn-check" name="segment-{{day.dayOfWeek}}" id="volta-{{day.dayOfWeek}}"
               value="AFTERNOON" [(ngModel)]="day.schedule" />
             <label class="btn btn-outline-success w-100 m-1 d-flex align-items-center justify-content-center"
               for="volta-{{day.dayOfWeek}}">
-              <i class="bi bi-sunset me-1"></i> Volta
+              <i class="bi bi-arrow-left-circle me-1"></i> Volta
             </label>
 
             <input type="radio" class="btn-check" name="segment-{{day.dayOfWeek}}" id="ambas-{{day.dayOfWeek}}"
               value="BOTH" [(ngModel)]="day.schedule" />
             <label class="btn btn-outline-success w-100 m-1 d-flex align-items-center justify-content-center"
               for="ambas-{{day.dayOfWeek}}">
-              <i class="bi bi-arrow-repeat me-1"></i> Ambas
+              <i class="bi bi-arrow-left-right me-1"></i> Ambas
             </label>
           </div>
         </div>
+        }
       </div>
+      }
     </div>
   </div>
 
-  <div class="card border-0 shadow-sm mb-3">
+  <div class="card border-0 shadow-sm mb-3" style="border-radius: 12px;">
     <div class="card-body text-center">
       <h6 class="fw-bold mb-1 text-secondary d-flex align-items-center justify-content-center">
         <i class="bi bi-credit-card-2-front text-secondary me-2"></i> Status de Pagamento
@@ -67,7 +69,11 @@
     </div>
   </div>
 
-  <button (click)="save()" class="btn w-100 text-white fw-bold" style="background-color:#0056B3;">
+  <button (click)="save()" class="btn w-100 text-white fw-bold" style="background-color: #0D6EFD;">
     <i class="bi bi-save me-2"></i>Salvar Agenda Semanal
+  </button>
+
+  <button (click)="goToPassengerHome()" class="btn btn-outline-secondary w-100 fw-bold mt-2">
+    <i class="bi bi-arrow-left me-2"></i>Voltar
   </button>
 </div>

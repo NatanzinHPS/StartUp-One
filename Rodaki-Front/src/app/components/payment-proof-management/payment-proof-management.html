@@ -1,0 +1,172 @@
+<div class="container py-3 proofs-page">
+    <app-top-bar [profileImage]="'assets/DriverProfile.png'" [redirectTo]="'/daily-checkin'"
+        [title]="'Gestão de Comprovantes'"></app-top-bar>
+    <!-- Summary Cards -->
+    <div class="row g-2 mb-3 text-center stats-row">
+        <div class="col-6 col-sm-3">
+            <div class="card small-card shadow-sm border-0">
+                <div class="card-body p-2">
+                    <h5 class="fw-bold mb-0 text-primary"><i class="bi bi-hourglass-split me-1"></i> {{
+                        animatedStats.aguardando }}</h5>
+                    <small class="text-muted">Aguardando Aprovação</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-sm-3">
+            <div class="card small-card shadow-sm border-0">
+                <div class="card-body p-2">
+                    <h5 class="fw-bold mb-0 text-success"><i class="bi bi-check-circle me-1"></i> {{
+                        animatedStats.aprovados }}</h5>
+                    <small class="text-muted">Aprovado</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-sm-3">
+            <div class="card small-card shadow-sm border-0">
+                <div class="card-body p-2">
+                    <h5 class="fw-bold mb-0 text-danger"><i class="bi bi-x-circle me-1"></i> {{ animatedStats.rejeitados
+                        }}</h5>
+                    <small class="text-muted">Rejeitado</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-sm-3">
+            <div class="card small-card shadow-sm border-0">
+                <div class="card-body p-2">
+                    <h5 class="fw-bold mb-0 text-warning"><i class="bi bi-exclamation-circle me-1"></i> {{
+                        animatedStats.pendentes }}</h5>
+                    <small class="text-muted">Pendente</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+
+    <div class="filters mb-3 d-flex gap-2 overflow-auto pb-1">
+        @for (f of filters; track f.key) {
+        <button (click)="setFilter(f.key)" class="btn px-3 fw-semibold flex-shrink-0" [ngClass]="{
+                                    'btn-primary': f.key==='AGUARDANDO_APROVAÇÃO' && activeFilter==='AGUARDANDO_APROVAÇÃO',
+                                    'btn-warning': f.key==='PENDENTE' && activeFilter==='PENDENTE',
+                                    'text-white': f.key==='PENDENTE' && activeFilter==='PENDENTE',
+                                    'btn-success': f.key==='APROVADO' && activeFilter==='APROVADO',
+                                    'btn-danger': f.key==='REJEITADO' && activeFilter==='REJEITADO',
+                                    'btn-outline-secondary': activeFilter!==f.key
+                                }">
+            {{ f.label }}
+        </button>
+        }
+    </div>
+    <div class="filters mb-3 d-flex gap-2 overflow-auto pb-1">
+        <div class="input-group me-2" style="min-width:250px; max-width: 400px;">
+            <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
+            <input class="form-control border-start-0" placeholder="Buscar passageiro..." [(ngModel)]="searchTerm"
+                (input)="applyFilter()" />
+        </div>
+    </div>
+
+    <!-- Proof list -->
+    <div class="list">
+        @for (p of filtered; track p.id) {
+        <div class="card proof-card mb-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <div class="fw-bold">{{ p.name }}</div>
+                        <div class="small text-muted">{{ p.month }} • R$ {{ p.amount | number:'1.2-2' }}</div>
+                        <div class="small text-muted">Enviado: {{ p.uploadDate | date:'short' }}</div>
+                    </div>
+
+                    <div class="text-end">
+                        <div>
+                            <span class="status-badge me-2" [ngClass]="{
+                'badge-await': p.statusDetail==='AGUARDANDO_APROVAÇÃO',
+                'badge-pend': p.statusDetail==='PENDENTE',
+                'badge-apro': p.statusDetail==='APROVADO',
+                'badge-rej': p.statusDetail==='REJEITADO'
+              }">{{ formatStatus(p.statusDetail) }}</span>
+                        </div>
+                        <div class="mt-2">
+                            @if (p.statusDetail!=='PENDENTE') {
+                            <button class="btn btn-sm btn-primary me-2" (click)="openModal(p)"><i
+                                    class="bi bi-eye me-1"></i>Visualizar</button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+
+</div>
+
+<app-bottom-nav></app-bottom-nav>
+
+
+<!-- Modal -->
+@if (modalOpen) {
+<div class="modal-backdrop" (click)="closeModal()"></div>
+<div class="modal-wrapper" role="dialog" aria-modal="true">
+    <div class="modal-card">
+        <div class="modal-header d-flex justify-content-between align-items-center">
+            <div>
+                <h5 class="m-0">Visualizar Comprovante</h5>
+                <small class="text-muted">{{ currentProof?.name }} — {{ currentProof?.month }}</small>
+            </div>
+            <button class="btn btn-light" (click)="closeModal()"><i class="bi bi-x-lg"></i></button>
+        </div>
+
+        <div class="modal-body">
+            <div class="viewer">
+                @if (currentProof?.proofFileUrl) {
+                <img [src]="currentProof?.proofFileUrl" alt="proof" class="img-fluid" />
+                } @else {
+                <div class="no-file text-center text-muted">Arquivo não disponível</div>
+                }
+            </div>
+
+            <div class="meta mt-3">
+                <div><strong>Valor:</strong> R$ {{ currentProof?.amount | number:'1.2-2' }}</div>
+                <div><strong>Enviado:</strong> {{ currentProof?.uploadDate | date:'short' }}</div>
+                <div><strong>Status:</strong>
+                    <span class="status-badge" [ngClass]="{
+                        'badge-await': currentProof?.statusDetail==='AGUARDANDO_APROVAÇÃO',
+                        'badge-pend': currentProof?.statusDetail==='PENDENTE',
+                        'badge-apro': currentProof?.statusDetail==='APROVADO',
+                        'badge-rej': currentProof?.statusDetail==='REJEITADO'
+                    }">{{ formatStatus(currentProof?.statusDetail) }}</span>
+                </div>
+            </div>
+
+            @if (currentProof && currentProof.statusDetail==='AGUARDANDO_APROVAÇÃO') {
+            <div class="actions mt-3 d-flex gap-2">
+                <button class="btn btn-success flex-fill" (click)="approve(currentProof)">Aprovar</button>
+                <button class="btn btn-danger flex-fill" (click)="reject(currentProof)">Rejeitar</button>
+            </div>
+
+            @if (showRejectArea) {
+            <div class="rejection-area mt-3">
+                <label class="form-label small">Comentário da Revisão (obrigatório para rejeição)</label>
+                <textarea class="form-control" rows="3" [(ngModel)]="rejectComment"></textarea>
+                <div class="mt-2 d-flex justify-content-end gap-2">
+                    <button class="btn btn-secondary" (click)="cancelReject()">Cancelar</button>
+                    <button class="btn btn-danger" [disabled]="!rejectComment.trim().length"
+                        (click)="reject(currentProof)">Confirmar Rejeição</button>
+                </div>
+            </div>
+            }
+            }
+        </div>
+    </div>
+</div>
+}
+
+
+<!-- toast -->
+<div class="toast-wrap" [class.show]="showToast" [ngClass]="toastClass">
+    <div class="toast-inner">{{ toastText }}</div>
+</div>

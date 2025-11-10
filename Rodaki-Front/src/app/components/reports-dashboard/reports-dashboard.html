@@ -1,0 +1,100 @@
+<div class="reports-container container py-3">
+    <app-top-bar [profileImage]="'assets/DriverProfile.png'" [redirectTo]="'/daily-checkin'" [title]="'Dashboard e Relatórios'">
+    </app-top-bar>
+
+    <!-- charts: stacked mobile first -->
+    <div class="charts-grid mb-3">
+        <div class="card chart-card">
+            <div class="card-body">
+                <div class="card-title fw-bold">Taxa de Presença (15 dias)</div>
+                <apx-chart [series]="lineChartOptions.series" [chart]="lineChartOptions.chart"
+                    [xaxis]="lineChartOptions.xaxis" [stroke]="lineChartOptions.stroke"
+                    [colors]="lineChartOptions.colors" [grid]="lineChartOptions.grid"></apx-chart>
+            </div>
+        </div>
+
+        <div class="card chart-card">
+            <div class="card-body">
+                <div class="card-title fw-bold">Status dos Pagamentos</div>
+                <apx-chart [series]="donutSeries" [chart]="{type:'donut',height:220}" [labels]="donutLabels"
+                    [colors]="['#28A745','#FFC107','#DC3545']"
+                    [responsive]="[{breakpoint:480, options:{chart:{height:160}}}]"></apx-chart>
+            </div>
+        </div>
+
+        <div class="card chart-card">
+            <div class="card-body">
+                <div class="card-title fw-bold">Receita por Rota</div>
+                <apx-chart [series]="revenueOptions.series" [chart]="revenueOptions.chart"
+                    [plotOptions]="revenueOptions.plotOptions" [xaxis]="revenueOptions.xaxis"
+                    [colors]="revenueOptions.colors"></apx-chart>
+            </div>
+        </div>
+
+        <div class="card chart-card">
+            <div class="card-body">
+                <div class="card-title fw-bold">Top 5 Ausentes</div>
+                <apx-chart [series]="absentOptions.series" [chart]="absentOptions.chart"
+                    [plotOptions]="absentOptions.plotOptions" [xaxis]="absentOptions.xaxis"
+                    [colors]="absentOptions.colors"></apx-chart>
+            </div>
+        </div>
+    </div>
+
+    <!-- CSV Export -->
+    <div class="export-section card mb-3">
+        <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+                <div>
+                    <h6 class="fw-bold mb-0">Exportação de Dados Brutos (CSV)</h6>
+                    <small class="text-muted">Escolha período e tipo de dados</small>
+                </div>
+            </div>
+
+            <div class="row g-2 align-items-end">
+                <div class="col-6 col-md-3">
+                    <label class="form-label small">Data Inicial</label>
+                    <input class="form-control" type="date" [(ngModel)]="fromDate" />
+                </div>
+                <div class="col-6 col-md-3">
+                    <label class="form-label small">Data Final</label>
+                    <input class="form-control" type="date" [(ngModel)]="toDate" />
+                </div>
+                <div class="col-6 col-md-3">
+                    <label class="form-label small">Tipo de Dados</label>
+                    <select class="form-select" [(ngModel)]="dataType">
+                        <option>Presenca</option>
+                        <option>Pagamentos</option>
+                        <option>Ambos</option>
+                    </select>
+                </div>
+                <div class="col-6 col-md-3 d-grid">
+                    <button class="btn btn-primary" (click)="doExport()" [disabled]="exporting">
+                        <i class="bi bi-download me-2"></i>
+                        {{ exporting ? 'Exportando...' : 'Exportar CSV' }}
+                    </button>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <h6 class="fw-semibold">Histórico de Exportações</h6>
+                <ul class="list-unstyled mt-2">
+                    <li *ngFor="let h of history"
+                        class="d-flex align-items-center justify-content-between py-2 border-bottom">
+                        <div>
+                            <div class="small fw-bold">{{ h.fileName }}</div>
+                            <div class="small text-muted">{{ h.createdAt | date:'short' }}</div>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm btn-outline-primary" (click)="downloadRecord(h)"><i
+                                    class="bi bi-download"></i></button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- bottom nav for mobile -->
+    <app-bottom-nav></app-bottom-nav>
+</div>

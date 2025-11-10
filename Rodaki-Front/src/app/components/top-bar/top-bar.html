@@ -1,0 +1,11 @@
+<header class="top-bar d-flex align-items-center justify-content-between px-3 py-2">
+  <div class="d-flex align-items-center" (click)="goHome()" style="cursor:pointer;">
+    <img src="assets/LogoNoBG.png" alt="Rodaki" height="36" class="me-2" />
+    <h5 class="m-0 text-primary fw-bold">{{ title }}</h5>
+  </div>
+
+  <div class="profile-container" (click)="profileClicked()">
+    <img [src]="profileImage" alt="Profile" class="profile-img shadow-sm" />
+  </div>
+</header>
+<br>

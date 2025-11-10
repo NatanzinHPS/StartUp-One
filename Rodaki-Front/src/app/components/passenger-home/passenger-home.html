@@ -1,13 +1,6 @@
 <div class="container py-3">
-    <div class="d-flex align-items-center justify-content-between mb-3">
-        <div class="d-flex align-items-center">
-            <img src="assets/LogoNoBG.png" alt="Rodaki" height="36" class="me-2" />
-            <h4 class="m-0 text-primary fw-bold">Rodaki</h4>
-        </div>
-        @if (profile?.avatarUrl) {
-            <img [src]="profile?.avatarUrl" alt="avatar" class="avatar" />
-        }
-    </div>
+    <app-top-bar [profileImage]="profile?.avatarUrl" [redirectTo]="'/passenger-home'">
+    </app-top-bar>
 
     <div class="card mb-3 shadow-sm">
         <div class="card-body">
@@ -17,9 +10,9 @@
             <div class="small text-muted mb-1 me-2">Status de hoje:
                 <span class="badge status-badge {{ statusBadgeClass(todayStatus) }}">
                     @if (todayStatus) {
-                        Confirmado: {{ statusLabel(todayStatus).toUpperCase() }}
+                    Confirmado: {{ statusLabel(todayStatus).toUpperCase() }}
                     } @else {
-                        Nenhuma seleção
+                    Nenhuma seleção
                     }
                 </span>
             </div>
@@ -55,8 +48,8 @@
             </div>
 
             <div
-                class="small text-muted mt-2 bg-warning bg-opacity-10 border border-warning rounded-3 p-2 d-block w-100">
-                <i class="bi bi-clock me-2"></i>{{ deadlineText }}
+                class="small text-muted mt-2 bg-warning bg-opacity-10 border border-warning rounded-3 p-2 d-block w-100" style="border-radius: 0.75rem;">
+                <i class="bi bi-clock me-2"></i>Alterações até as <strong>{{ deadlineTime }}</strong>
             </div>
         </div>
     </div>
@@ -64,7 +57,7 @@
     <div class="card mb-3 shadow-sm">
         <div class="card-body d-flex align-items-center gap-3">
             @if (profile?.avatarUrl) {
-                <img [src]="profile?.avatarUrl" alt="avatar" class="avatar-lg rounded-circle" />
+            <img [src]="profile?.avatarUrl" alt="avatar" class="avatar-lg rounded-circle" />
             }
             <div class="flex-fill">
                 <div class="fw-bold">{{ profile?.name }}</div>
@@ -86,7 +79,7 @@
                 <i class="bi bi-credit-card-2-front text-success fs-4 me-3"></i>
                 <div>
                     <div class="fw-bold">Pagamento em Dia</div>
-                    <div class="small text-muted">Próximo vencimento: 15/11</div>
+                    <div class="small text-muted">Próximo vencimento: 20/12</div>
                 </div>
             </div>
             <i class="bi bi-check-circle-fill text-success fs-4"></i>

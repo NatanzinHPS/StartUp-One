@@ -1,0 +1,23 @@
+<br><br>
+<nav class="bottom-nav d-flex d-md-none justify-content-around align-items-center">
+    <button (click)="go('/daily-checkin')" class="nav-btn" [class.active]="isActive('/daily-checkin')">
+        <i class="bi bi-house-fill"></i>
+        <small>Início</small>
+    </button>
+    <button (click)="go('/payment-proof-management')" class="nav-btn" [class.active]="isActive('/payment-proof-management')">
+        <i class="bi bi-paperclip"></i>
+        <small>Comprov.</small>
+    </button>
+    <button (click)="go('/passenger-management')" class="nav-btn" [class.active]="isActive('/passenger-management')">
+        <i class="bi bi-people-fill"></i>
+        <small>Passag.</small>
+    </button>
+    <button (click)="go('/reports-dashboard')" class="nav-btn" [class.active]="isActive('/reports-dashboard')">
+        <i class="bi bi-bar-chart-fill"></i>
+        <small>Relat.</small>
+    </button>
+    <button (click)="go('/config')" class="nav-btn" [class.active]="isActive('/config')">
+        <i class="bi bi-gear-fill"></i>
+        <small>Config</small>
+    </button>
+</nav>

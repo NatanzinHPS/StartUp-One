@@ -1,0 +1,34 @@
+.reports-container {
+    max-width: 980px;
+    margin: 0 auto;
+    background: #F8F9FA;
+}
+
+.charts-grid {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: 1fr;
+}
+
+.chart-card {
+    border-radius: 10px;
+}
+
+.card-title {
+    font-size: 0.95rem;
+}
+
+.export-section {
+    border-radius: 10px;
+}
+
+@media (min-width: 768px) {
+    .charts-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* small tweaks */
+.card {
+    box-shadow: 0 8px 24px rgba(2, 6, 23, 0.06);
+}

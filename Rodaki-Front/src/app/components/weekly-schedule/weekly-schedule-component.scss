@@ -9,6 +9,10 @@
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+.btn {
+    border-radius: 12px !important;
+}
+
 
 .day-row:hover {
     background-color: #E0F7E9 !important;
@@ -35,7 +39,7 @@
 
 
 .selector-container .btn {
-    border-radius: 0.5rem !important;
+    border-radius: 12px !important;
     font-weight: 500;
 }
 

@@ -4,10 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PassengerProfile, PassengerProfileService } from '../../services/passenger-profile';
 import { CheckinService, TodayCheckin } from '../../services/checkin';
+import { TopBar } from '../top-bar/top-bar';
 
 @Component({
   selector: 'app-passenger-home',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TopBar],
   templateUrl: './passenger-home.html',
   styleUrls: ['./passenger-home.scss']
 })
@@ -17,7 +18,7 @@ export class PassengerHome implements OnInit {
   profile: PassengerProfile | null = null;
   todayStatus: TodayCheckin = null;
   saving = false;
-  deadlineText = 'Alterações até as 16:15';
+  deadlineTime = '16:15';
 
   constructor(
     private checkinService: CheckinService,

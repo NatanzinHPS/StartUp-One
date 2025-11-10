@@ -61,7 +61,8 @@
 }
 
 .list-group-item {
-  border-radius: 0.5rem;
+  border-width: 1px;
+  border-radius: 12px;
   margin-bottom: 0.5rem;
   transition: all 0.2s ease-in-out;
 }
@@ -69,6 +70,10 @@
 .list-group-item:hover {
   background: #f1f3f5;
   transform: translateX(3px);
+}
+
+.btn {
+  border-radius: 12px;
 }
 
 @media (min-width: 768px) {

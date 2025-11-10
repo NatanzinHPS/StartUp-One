@@ -36,7 +36,8 @@ export class RegisterComponent {
 
     this.authService.register(this.userData).subscribe({
       next: () => {
-        this.router.navigate(['/dashboard']);
+        const redirectUrl = this.authService.getRedirectUrlByRole();
+        this.router.navigate([redirectUrl]);
       },
       error: (error) => {
         this.errorMessage = error.error?.error || 'Erro ao registrar';

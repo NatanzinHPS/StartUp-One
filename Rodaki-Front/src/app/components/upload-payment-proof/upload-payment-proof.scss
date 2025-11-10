@@ -1,6 +1,7 @@
 .container {
     max-width: 480px;
     background-color: #F8F9FA;
+    border-radius: 12px;
 }
 
 .avatar {
@@ -8,11 +9,20 @@
     height: 44px;
 }
 
+.card {
+    border-radius: 12px !important;
+}
+
+.btn {
+    border-radius: 12px !important;
+}
+
 .upload-dropzone {
     border: 2px dashed #dee2e6;
     background: #fff;
     cursor: pointer;
     transition: all 0.3s ease;
+    border-radius: 12px;
 }
 
 .upload-dropzone.dragover {
@@ -33,4 +43,24 @@
     .container {
         max-width: 700px;
     }
+}
+
+.profile-container {
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-container:hover {
+  transform: scale(1.05);
+}
+
+.profile-img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
 }

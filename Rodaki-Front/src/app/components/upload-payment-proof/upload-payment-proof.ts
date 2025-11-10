@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PaymentProof, PaymentProofService } from '../../services/payment-proof';
 import { Router } from '@angular/router';
+import { TopBar } from '../top-bar/top-bar';
 
 @Component({
   selector: 'app-upload-payment-proof',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TopBar],
   templateUrl: './upload-payment-proof.html',
   styleUrl: './upload-payment-proof.scss',
 })
