@@ -89,14 +89,14 @@ export class DailyCheckinList implements OnInit {
 
   getTripIcon(tripType?: 'IDA' | 'VOLTA' | 'AMBAS'): string {
     switch (tripType) {
-      case 'IDA': return 'bi-arrow-right-circle text-warning';
-      case 'VOLTA': return 'bi-arrow-left-circle text-warning';
-      case 'AMBAS': return 'bi-arrow-left-right text-success';
+      case 'IDA': return 'bi-arrow-right-circle trip-going';
+      case 'VOLTA': return 'bi-arrow-left-circle trip-back';
+      case 'AMBAS': return 'bi-arrow-left-right trip-both';
       default: return '';
     }
   }
 
   getTripLabel(tripType?: 'IDA' | 'VOLTA' | 'AMBAS'): string {
-    return tripType ? tripType.charAt(0) + tripType.slice(1).toLowerCase() : '';
+    return tripType ? tripType.charAt(0) + tripType.slice(1).toUpperCase() : '';
   }
 }
