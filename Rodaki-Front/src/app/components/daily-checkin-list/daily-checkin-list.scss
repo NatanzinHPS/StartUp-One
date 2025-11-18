@@ -39,6 +39,39 @@
     background-color: #f8f9fa;
 }
 
+.status-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.status-label {
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.trip-badge {
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    opacity: 0.95;
+}
+
+.trip-going,
+.trip-back {
+    background: #fff4d6;
+    color: #92400e;
+}
+
+.trip-both {
+    background: #e6f9ee;
+    color: #065f46;
+}
+
 .filters {
     white-space: nowrap;
 }
